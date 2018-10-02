@@ -1,0 +1,802 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>IIITM Visitor Hostel</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	{% load static %}
+	<link href="{% static 'css/bootstrap-responsive.css' %}" rel="stylesheet">
+	<link href="{% static 'css/style.css' %}" rel="stylesheet">
+	<link href="{% static 'color/default.css' %}" rel="stylesheet">
+	<link rel="shortcut icon" href="{% static 'img/logo-image.png' %}">
+	<!-- =======================================================
+    Theme Name: Maxim
+    Theme URL: https://bootstrapmade.com/maxim-free-onepage-bootstrap-theme/
+    Author: BootstrapMade.com
+    Author URL: https://bootstrapmade.com
+	======================================================= -->
+</head>
+
+<body>
+	<!-- navbar -->
+	<div class="navbar-wrapper">
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<!-- Responsive navbar -->
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+				</a>
+					<h1 class="brand"><a href="https://www.iiitm.ac.in/">Home</a></h1>
+					<!-- navigation -->
+					<nav class="pull-right nav-collapse collapse">
+						<ul id="menu-main" class="nav">
+							<li><a title="team" href="#about">About</a></li>
+							<li><a title="rooms" href="#rooms">Rooms</a></li>
+							<li><a title="services" href="#services">Services</a></li>
+
+							<li><a title="Book Your Room" href="/bookroom">Book Your Room</a></li>
+						<!--	<li><a title="blog" href="#blog">Blog</a></li>	-->
+							<li><a title="contact" href="#contact">Contact</a></li>
+							<li><a href="page.html">Photo Gallery</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Header area -->
+	<div id="header-wrapper" class="header-slider">
+		<header class="clearfix">
+			<div class="logo">
+				<img src="{% static 'img/logo-image.png' %}" alt="" />
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="span12">
+						<div id="main-flexslider" class="flexslider">
+							<ul class="slides">
+								<li>
+									<p class="home-slide-content" style="color:#091D48">
+										<strong>ABV-IIITM</strong>
+									</p>
+								</li>
+								<li>
+									<p class="home-slide-content" style="color:#091D48">
+										<strong>MDP</strong> Centre
+									</p>
+								</li>
+								<li>
+									<p class="home-slide-conten" style="color:#091D48" font-size="12">
+										<strong>Visitor's</strong> Hostel
+									</p>
+								</li>
+								<li>
+									<p class="home-slide-content" style="color:#091D48">
+										<strong>अतिथि देवो भव:</strong>
+									</p>
+								</li>
+							</ul>
+						</div>
+						<!-- end slider -->
+					</div>
+				</div>
+			</div>
+		</header>
+	</div>
+	<!-- spacer section -->
+<!--
+	<section class="spacer green">
+		<div class="container">
+			<div class="row">
+				<div class="span6 alignright flyLeft">
+					<blockquote class="large">
+						There's huge space beetween creativity and imagination <cite>Mark Simmons, Nett Media</cite>
+					</blockquote>
+				</div>
+				<div class="span6 aligncenter flyRight">
+					<i class="icon-coffee icon-10x"></i>
+				</div>
+			</div>
+		</div>
+	</section>
+-->
+	<!-- end spacer section -->
+	<!-- section: team -->
+	<section id="about" class="section" >
+		<div class="container">
+			<h4>About</h4>
+			<div class="row">
+				<div class="span4 offset1">
+					<div>
+						<h2>We are here to <strong>Serve</strong></h2>
+						<p>
+							ABV-IIITM has a separate ‘visitor’s hostel’ for guests and visitors. Thirty air-conditioned rooms spread over three floors accommodate visitors of this institute. Guest rooms are furnished and draped. They are fitted with water purifiers, channel television, refrigerators, microwave ovens, and hotplate.  If required you could prepare your own food. Every room has an en-suite bathroom with round the clock water supply and geyser connection.<br>The guest house is set amidst plenty of greenery allowing viewing of cranes, egrets, swallows, squirrels, mongoose, and even peacocks.
+						</p>
+					</div>
+				</div>
+				<div class="span6">
+					<div class="aligncenter">
+						<img src="{% static 'img/bg/bg-2.jpg' %}" alt="" />
+					</div>
+				</div>
+			</div>
+<!--
+			<div class="row">
+				<div class="span2 offset1 flyIn">
+					<div class="people">
+						<img class="team-thumb img-circle" src="img/team/img-1.jpg" alt="" />
+						<h3>John Doe</h3>
+						<p>
+							Art director
+						</p>
+					</div>
+				</div>
+				<div class="span2 flyIn">
+					<div class="people">
+						<img class="team-thumb img-circle" src="img/team/img-2.jpg" alt="" />
+						<h3>Mike Doe</h3>
+						<p>
+							Web developer
+						</p>
+					</div>
+				</div>
+				<div class="span2 flyIn">
+					<div class="people">
+						<img class="team-thumb img-circle" src="img/team/img-3.jpg" alt="" />
+						<h3>Neil Doe</h3>
+						<p>
+							Web designer
+						</p>
+					</div>
+				</div>
+				<div class="span2 flyIn">
+					<div class="people">
+						<img class="team-thumb img-circle" src="img/team/img-4.jpg" alt="" />
+						<h3>Mark Joe</h3>
+						<p>
+							UI designer
+						</p>
+					</div>
+				</div>
+				<div class="span2 flyIn">
+					<div class="people">
+						<img class="team-thumb img-circle" src="img/team/img-5.jpg" alt="" />
+						<h3>Stephen B</h3>
+						<p>
+							Digital imaging
+						</p>
+					</div>
+				</div>
+-->
+			</div>
+		</div>
+		<!-- /.container -->
+	</section>
+	<section id="rooms" class="section yellow">
+		<div class="container">
+			<h4>Rooms</h4>
+			<!-- Three columns -->
+			<h1><strong>MDP CENTER</strong></h1>
+						<div class="row">
+				<div class="span6 animated-fast flyIn">
+					<div class="service-box">
+						<img src="{% static 'img/bg/vip.jpg' %}" alt="" />
+					</div>
+				</div>
+
+				<div class="span6 animated-fast flyIn">
+					<div class="service-box">
+						<h2>VIP</h2>
+						<p>
+							Rooms are fitted with refrigerators, microwave ovens, and hotplate.  If required you could prepare your own food.<br><br><strong>Expense: 2000/-</strong>
+
+						</p><br>
+						<a href="book_a_room.html"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+					</div>
+				</div>
+			</div><br><br>
+						<div class="row">
+				<div class="span6 animated flyIn">
+					<div class="service-box">
+						<h2>AC</h2>
+						<p>
+							All the rooms have high speed WiFi connectivity to keep you on the go.<br><br><strong>Expense : <br>
+Single Occupancy : 750/-<br>
+Double Occupancy : 1250/-</strong>
+						</p><br>
+				<a href="book_a_room.html"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+					</div>
+				</div><br>
+
+				<div class="span6 animated flyIn">
+					<div class="service-box">
+						<img src="{% static 'img/bg/ac.jpg' %}" alt="" />
+					</div>
+				</div>
+<!--
+				<div class="span4 animated-fast flyIn">
+					<div class="service-box">
+						<img src="img/bg/non.jpg" alt="" />
+						<h2>Non-AC</h2>
+						<p>
+							For entertainment you have a channel television in your rooms.
+						</p><br>
+			<a href="book_a_room.html"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+					
+					</div>
+				</div>
+-->
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				
+			
+			</div><br><br>
+			<h1 align="left"><strong>INTERNATIONAL VISITORS HOSTEL </strong></h1>
+						<div class="row">
+				
+				<div class="span6 animated flyIn">
+					<div class="service-box">
+						<img src="{% static 'img/bg/visitors.jpg' %}" alt="" />
+<!--
+						<h2>AC</h2>
+						<p>
+							All the rooms have high speed WiFi connectivity to keep you on the go.
+						</p><br>
+			<a href="book_a_room.html"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+-->
+					</div>
+				</div>
+				
+				<div class="span6 animated flyIn">
+					<div class="service-box">
+						<h2>AC</h2>
+						<p>
+
+							All the rooms have high speed WiFi connectivity to keep you on the go.<br><br><strong>Expense : <br>
+Single Occupancy : 500/-<br>
+Double Occupancy : 750/-</strong>
+
+						</p><br>
+
+			<a href="book_a_room.html"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+					</div>
+				</div>
+<!--
+				<div class="span4 animated-fast flyIn">
+					<div class="service-box">
+						<img src="img/bg/non.jpg" alt="" />
+						<h2>Non-AC</h2>
+						<p>
+							For entertainment you have a channel television in your rooms.
+						</p><br>
+				<a href="book_a_room.html"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+					
+					</div>
+				</div>
+-->
+		</div>
+	</section>
+
+	<!-- end section: team -->
+	<!-- section: services -->
+	<section id="services" class="section orange">
+		<div class="container">
+			<h4>Services</h4>
+			<!-- Four columns -->
+			<div class="row">
+				<div class="span3 animated-fast flyIn">
+					<div class="service-box">
+						<img src="{% static 'img/icons/food.png' %}" alt="" />
+						<h2>Food</h2>
+						<p>
+							Rooms are fitted with refrigerators, microwave ovens, and hotplate.  If required you could prepare your own food.
+						</p>
+					</div>
+				</div>
+				<div class="span3 animated flyIn">
+					<div class="service-box">
+						<img src="{% static 'img/icons/wifi.png' %}" alt="" />
+						<h2>WiFi</h2>
+						<p>
+							All the rooms have high speed WiFi connectivity to keep you on the go.
+						</p>
+					</div>
+				</div>
+				<div class="span3 animated-fast flyIn">
+					<div class="service-box">
+						<img src="{% static 'img/icons/tv.png' %}" alt="" />
+						<h2>Television</h2>
+						<p>
+							For entertainment you have a channel television in your rooms.
+						</p>
+					</div>
+				</div>
+				<div class="span3 animated-slow flyIn">
+					<div class="service-box">
+						<img src="{% static 'img/icons/shower.png' %}" alt="" />
+						<h2>Shower</h2>
+						<p>
+							Every room has an en-suite bathroom with round the clock water supply and geyser connection.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end section: services -->
+	<!-- section: works -->
+<!--
+	<section id="works" class="section">
+		<div class="container clearfix">
+			<h4>Our Works</h4>
+			<div class="row">
+				<div id="filters" class="span12">
+					<ul class="clearfix">
+						<li>
+							<a href="#" data-filter="*" class="active">
+								<h5>All</h5>
+							</a>
+						</li>
+						<li>
+							<a href="#" data-filter=".web">
+								<h5>Web</h5>
+							</a>
+						</li>
+						<li>
+							<a href="#" data-filter=".print">
+								<h5>Print</h5>
+							</a>
+						</li>
+						<li>
+							<a href="#" data-filter=".design">
+								<h5>Design</h5>
+							</a>
+						</li>
+						<li>
+							<a href="#" data-filter=".photography">
+								<h5>Photography</h5>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<div id="portfolio-wrap">
+						<div class="portfolio-item grid print photography">
+							<div class="portfolio">
+								<a href="img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
+						<img src="img/works/1.png" alt="" />
+						<div class="portfolio-overlay">
+							<div class="thumb-info">
+								<h5>Portfolio name</h5>
+								<i class="icon-plus icon-2x"></i>
+							</div>
+						</div>
+						</a>
+							</div>
+						</div>
+						<div class="portfolio-item grid print design web">
+							<div class="portfolio">
+								<a href="img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
+						<img src="img/works/2.png" alt="" />
+						<div class="portfolio-overlay">
+							<div class="thumb-info">
+								<h5>Portfolio name</h5>
+								<i class="icon-plus icon-2x"></i>
+							</div>
+						</div>
+						</a>
+							</div>
+						</div>
+						<div class="portfolio-item grid print design">
+							<div class="portfolio">
+								<a href="img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
+						<img src="img/works/3.png" alt="" />
+						<div class="portfolio-overlay">
+							<div class="thumb-info">
+								<h5>Portfolio name</h5>
+								<i class="icon-plus icon-2x"></i>
+							</div>
+						</div>
+						</a>
+							</div>
+						</div>
+						<div class="portfolio-item grid photography web">
+							<div class="portfolio">
+								<a href="img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
+						<img src="img/works/4.png" alt="" />
+						<div class="portfolio-overlay">
+							<div class="thumb-info">
+								<h5>Portfolio name</h5>
+								<i class="icon-plus icon-2x"></i>
+							</div>
+						</div>
+						</a>
+							</div>
+						</div>
+						<div class="portfolio-item grid photography web">
+							<div class="portfolio">
+								<a href="img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
+						<img src="img/works/5.png" alt="" />
+						<div class="portfolio-overlay">
+							<div class="thumb-info">
+								<h5>Portfolio name</h5>
+								<i class="icon-plus icon-2x"></i>
+							</div>
+						</div>
+						</a>
+							</div>
+						</div>
+						<div class="portfolio-item grid photography web">
+							<div class="portfolio">
+								<a href="img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
+						<img src="img/works/6.png" alt="" />
+						<div class="portfolio-overlay">
+							<div class="thumb-info">
+								<h5>Portfolio name</h5>
+								<i class="icon-plus icon-2x"></i>
+							</div>
+						</div>
+						</a>
+							</div>
+						</div>
+						<div class="portfolio-item grid photography web">
+							<div class="portfolio">
+								<a href="img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
+						<img src="img/works/7.png" alt="" />
+						<div class="portfolio-overlay">
+							<div class="thumb-info">
+								<h5>Portfolio name</h5>
+								<i class="icon-plus icon-2x"></i>
+							</div>
+						</div>
+						</a>
+							</div>
+						</div>
+						<div class="portfolio-item grid photography">
+							<div class="portfolio">
+								<a href="img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
+						<img src="img/works/8.png" alt="" />
+						<div class="portfolio-overlay">
+							<div class="thumb-info">
+								<h5>Portfolio name</h5>
+								<i class="icon-plus icon-2x"></i>
+							</div>
+						</div>
+						</a>
+							</div>
+						</div>
+						<div class="portfolio-item grid photography web">
+							<div class="portfolio">
+								<a href="img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
+						<img src="img/works/9.png" alt="" />
+						<div class="portfolio-overlay">
+							<div class="thumb-info">
+								<h5>Portfolio name</h5>
+								<i class="icon-plus icon-2x"></i>
+							</div>
+						</div>
+						</a>
+							</div>
+						</div>
+						<div class="portfolio-item grid design web">
+							<div class="portfolio">
+								<a href="img/works/big.jpg" data-pretty="prettyPhoto[gallery1]" class="portfolio-image">
+						<img src="img/works/10.png" alt="" />
+						<div class="portfolio-overlay">
+							<div class="thumb-info">
+								<h5>Portfolio name</h5>
+								<i class="icon-plus icon-2x"></i>
+							</div>
+						</div>
+						</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="spacer bg3">
+		<div class="container">
+			<div class="row">
+				<div class="span12 aligncenter flyLeft">
+					<blockquote class="large">
+						We are an established and trusted web agency with a reputation for commitment and high integrity
+					</blockquote>
+				</div>
+				<div class="span12 aligncenter flyRight">
+					<i class="icon-rocket icon-10x"></i>
+				</div>
+			</div>
+		</div>
+	</section>
+-->
+	<!-- end spacer section -->
+<!--
+  <section id="book" class="section-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h1 class="header-h">Book Your Room</h1>
+
+          <p class="header-p">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy
+            <br>nibh euismod tincidunt ut laoreet dolore magna aliquam. </p>
+
+        </div>
+      </div>
+      <div class="row msg-row">
+        <div class="col-md-4 col-sm-4 mr-15">
+          <div class="media-2">
+            <div class="media-left">
+              <div class="contact-phone bg-1 text-center"><span class="phone-in-talk fa fa-phone"></span></div>
+            </div>
+
+            <div class="media-body">
+              <h4 class="dark-blue regular">Phone Numbers</h4>
+              <p class="light-blue regular alt-p">+440 875369208 - <span class="contacts-sp">Phone Booking</span></p>
+            </div>
+
+          </div>
+          <div class="media-2">
+            <div class="media-left">
+              <div class="contact-email bg-14 text-center"><span class="hour-icon fa fa-clock-o"></span></div>
+            </div>
+
+            <div class="media-body">
+              <h4 class="dark-blue regular">Opening Hours</h4>
+              <p class="light-blue regular alt-p"> Monday to Friday 09.00 - 24:00</p>
+              <p class="light-blue regular alt-p">
+                Friday and Sunday 08:00 - 03.00
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 col-sm-8">
+          <form action="" method="post" role="form" class="contactForm">
+            <div id="sendmessage">Your booking request has been sent. Thank you!</div>
+            <div id="errormessage"></div>
+            <div class="col-md-6 col-sm-6 contact-form pad-form">
+              <div class="form-group label-floating is-empty">
+                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                <div class="validation"></div>
+              </div>
+
+            </div>
+            <div class="col-md-6 col-sm-6 contact-form">
+              <div class="form-group">
+                <input type="date" class="form-control label-floating is-empty" name="date" id="date" placeholder="Date" data-rule="required" data-msg="This field is required" />
+                <div class="validation"></div>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 contact-form pad-form">
+              <div class="form-group">
+                <input type="email" class="form-control label-floating is-empty" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                <div class="validation"></div>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 contact-form">
+              <div class="form-group">
+                <input type="time" class="form-control label-floating is-empty" name="time" id="time" placeholder="Time" data-rule="required" data-msg="This field is required" />
+                <div class="validation"></div>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 contact-form">
+              <div class="form-group">
+                <input type="text" class="form-control label-floating is-empty" name="phone" id="phone" placeholder="Phone" data-rule="required" data-msg="This field is required" />
+                <div class="validation"></div>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 contact-form">
+              <div class="form-group">
+                <input type="text" class="form-control label-floating is-empty" name="people" id="people" placeholder="People" data-rule="required" data-msg="This field is required" />
+                <div class="validation"></div>
+              </div>
+            </div>
+            <div class="col-md-12 contact-form">
+              <div class="form-group label-floating is-empty">
+                <textarea class="form-control" name="message" rows="5" rows="3" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                <div class="validation"></div>
+              </div>
+
+            </div>
+            <div class="col-md-12 btnpad">
+              <div class="contacts-btn-pad">
+                <button class="contacts-btn">Book Room</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+-->
+	<!-- section: blog -->
+<!--
+	<section id="blog" class="section">
+		<div class="container">
+			<h4>Our Blog</h4>
+			<div class="row">
+				<div class="span3">
+					<div class="home-post">
+						<div class="post-image">
+							<img class="max-img" src="img/blog/img1.jpg" alt="" />
+						</div>
+						<div class="post-meta">
+							<i class="icon-file icon-2x"></i>
+							<span class="date">June 19, 2013</span>
+							<span class="tags"><a href="#">Design</a>, <a href="#">Blog</a></span>
+						</div>
+						<div class="entry-content">
+							<h5><strong><a href="#">New design trends</a></strong></h5>
+							<p>
+								Lorem Ipsum is simply dummy text of the printing and typesetting industry. &hellip;
+							</p>
+							<a href="#" class="more">Read more</a>
+						</div>
+					</div>
+				</div>
+				<div class="span3">
+					<div class="home-post">
+						<div class="post-image">
+							<img class="max-img" src="img/blog/img2.jpg" alt="" />
+						</div>
+						<div class="post-meta">
+							<i class="icon-file icon-2x"></i>
+							<span class="date">June 19, 2013</span>
+							<span class="tags"><a href="#">Design</a>, <a href="#">News</a></span>
+						</div>
+						<div class="entry-content">
+							<h5><strong><a href="#">Retro is great</a></strong></h5>
+							<p>
+								Lorem Ipsum is simply dummy text of the printing and typesetting industry. &hellip;
+							</p>
+							<a href="#" class="more">Read more</a>
+						</div>
+					</div>
+				</div>
+				<div class="span3">
+					<div class="home-post">
+						<div class="post-image">
+							<img class="max-img" src="img/blog/img3.jpg" alt="" />
+						</div>
+						<div class="post-meta">
+							<i class="icon-file icon-2x"></i>
+							<span class="date">June 22, 2013</span>
+							<span class="tags"><a href="#">Design</a>, <a href="#">Tips</a></span>
+						</div>
+						<div class="entry-content">
+							<h5><strong><a href="#">Isometric mockup</a></strong></h5>
+							<p>
+								Lorem Ipsum is simply dummy text of the printing and typesetting industry. &hellip;
+							</p>
+							<a href="#" class="more">Read more</a>
+						</div>
+					</div>
+				</div>
+				<div class="span3">
+					<div class="home-post">
+						<div class="post-image">
+							<img class="max-img" src="img/blog/img4.jpg" alt="" />
+						</div>
+						<div class="post-meta">
+							<i class="icon-file icon-2x"></i>
+							<span class="date">June 27, 2013</span>
+							<span class="tags"><a href="#">News</a>, <a href="#">Tutorial</a></span>
+						</div>
+						<div class="entry-content">
+							<h5><strong><a href="#">Free icon set</a></strong></h5>
+							<p>
+								Lorem Ipsum is simply dummy text of the printing and typesetting industry. &hellip;
+							</p>
+							<a href="#" class="more">Read more</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="blankdivider30"></div>
+			<div class="aligncenter">
+				<a href="#" class="btn btn-large btn-theme">More blog post</a>
+			</div>
+		</div>
+	</section>
+-->
+	<!-- end spacer section -->
+	<!-- section: contact -->
+	<section id="contact" class="section green">
+		<div class="container">
+			<h4>Get in Touch</h4>
+			<p>
+				In case of any kind of inconvenience or for your valuable feedback please leave your message.
+			</p>
+			<div class="blankdivider30">
+			</div>
+			<div class="row">
+				<div class="span12">
+					<div class="cform" id="contact-form">
+						<div id="sendmessage">Your message has been sent. Thank you!</div>
+						<div id="errormessage"></div>
+						<form action="" method="post" role="form" class="contactForm">
+							<div class="row">
+								<div class="span6">
+									<div class="field your-name form-group">
+										<input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+										<div class="validation"></div>
+									</div>
+									<div class="field your-email form-group">
+										<input type="text" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+										<div class="validation"></div>
+									</div>
+									<div class="field subject form-group">
+										<input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+										<div class="validation"></div>
+									</div>
+								</div>
+								<div class="span6">
+									<div class="field message form-group">
+										<textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+										<div class="validation"></div>
+									</div>
+									<input type="submit" value="Send message" class="btn btn-theme pull-left">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- ./span12 -->
+			</div>
+		</div>
+	</section>
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="span6 offset3">
+<!--
+					<ul class="social-networks">
+						<li><a href="#"><i class="icon-circled icon-bgdark icon-instagram icon-2x"></i></a></li>
+						<li><a href="#"><i class="icon-circled icon-bgdark icon-twitter icon-2x"></i></a></li>
+						<li><a href="#"><i class="icon-circled icon-bgdark icon-dribbble icon-2x"></i></a></li>
+						<li><a href="#"><i class="icon-circled icon-bgdark icon-pinterest icon-2x"></i></a></li>
+					</ul>
+-->
+					<p class="copyright">
+						&copy; ABV-IIITM. All rights reserved.
+						<div class="credits">
+							<!--
+                All the links in the footer should remain intact.
+                You can delete the links only if you purchased the pro version.
+                Licensing information: https://bootstrapmade.com/license/
+                Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Maxim
+              -->
+							Designed by <a href="#">Team</a>
+						</div>
+					</p>
+				</div>
+			</div>
+		</div>
+		<!-- ./container -->
+	</footer>
+	<a href="#" class="scrollup"><i class="icon-angle-up icon-square icon-bgdark icon-2x"></i></a>
+	<script src="{% static 'js/jquery.js' %}"></script>
+	<script src="{% static 'js/jquery.scrollTo.js' %}"></script>
+	<script src="{% static 'js/jquery.nav.js' %}"></script>
+	<script src="{% static 'js/jquery.localScroll.js' %}"></script>
+	<script src="{% static 'js/bootstrap.js' %}"></script>
+	<script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
+	<script src="{% static 'js/isotope.js' %}"></script>
+	<script src="{% static 'js/jquery.flexslider.js' %}"></script>
+	<script src="{% static 'js/inview.js' %}"></script>
+	<script src="{% static 'js/animate.js' %}"></script>
+	<script src="{% static 'js/custom.js' %}"></script>
+	<script src="{% static 'contactform/contactform.js' %}"></script>
+
+</body>
+
+</html>
