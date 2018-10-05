@@ -19,7 +19,8 @@
 
 
 
-<form action="">
+<form action="formsubmit/" method="Post">
+  {% csrf_token %}
   <!--  General -->
   <div class="form-group">
     <h2 class="heading">Booking & contact</h2>

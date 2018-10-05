@@ -21,7 +21,7 @@ from home import views
 
 urlpatterns = [
      path('',views.home,name='home'),
-     path('bookroom/',views.form,name='form'),
+     path('bookroom/',include('forms.urls')),
      path('admin/', admin.site.urls),
 
 ]
