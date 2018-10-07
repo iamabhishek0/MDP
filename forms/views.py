@@ -15,7 +15,7 @@ def form_submit(request):
 	depart=request.POST["depart"]
 	reference_name=request.POST["reference_name"]
 	reference_email=request.POST["reference_email"]
-	formsubmit=FormSubmit(name=name,email=email,number=number,street=street,city=city,pincode=pincode,arrive=arrive,depart=depart)
+	formsubmit=FormSubmit(name=name,email=email,number=number,street=street,city=city,pincode=pincode,arrive=arrive,depart=depart,reference_email=reference_email,reference_name=reference_name)
 	referencemail=ReferenceMail(reference_name=reference_name,reference_email=reference_email)
 	referencemail.save()
 	formsubmit.save()

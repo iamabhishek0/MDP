@@ -14,6 +14,8 @@ class FormSubmit(models.Model):
 		pincode=models.CharField(max_length=30,blank=True,null=True)
 		arrive=models.DateField(blank=True,null=True)
 		depart=models.DateTimeField(blank=True,null=True)
+		reference_name=models.CharField(max_length=30,blank=True,null=True)
+		reference_email=models.CharField(max_length=30,blank=True,null=True)
 	   
 
 
