@@ -35,9 +35,17 @@ def form_submit(request):
 				'domain': '127.0.0.1:8000',
 				'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
 				'token': account_activation_token.make_token(user),})
+	message_director=render_to_string('director_mail.html',{'user': user,
+				'reference_name' : reference_name ,
+				'domain': '127.0.0.1:8000/director',
+				'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+				'token': account_activation_token.make_token(user),})
 	to_email=reference_email
+
 	email=EmailMessage(mail_subject,message,to=[to_email])
+	email_director=EmailMessage(mail_subject,message_director,to=['imarpit02@gmail.com'])
 	email.send()
+	email_director.send()
 	return render(request,"room/formsubmitted.html")
 
 def activate(request, uidb64, token):
@@ -47,6 +55,17 @@ def activate(request, uidb64, token):
 	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
 		user = None
 	if user is not None and account_activation_token.check_token(user, token):
+		user.save()
+		return HttpResponse('Thank you for your confirmation')
+	else:
+		return HttpResponse('link is invalid! or You have already confirmed!!')
+def director_activate(request, uidb64,token):
+	try:
+		uid = force_text(urlsafe_base64_decode(uidb64))
+		user = User.objects.get(pk=uid)
+	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+		user = None
+	if user is not None :
 		user.is_active = True
 		user.save()
 		return HttpResponse('Thank you for your confirmation')
