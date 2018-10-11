@@ -2,7 +2,6 @@ from django.db import models
 from django.utils.timezone import now
 import datetime
 
-# Create your models here.
 class FormSubmit(models.Model):
 
 
@@ -16,7 +15,7 @@ class FormSubmit(models.Model):
 		depart=models.DateTimeField(blank=True,null=True)
 		reference_name=models.CharField(max_length=30,blank=True,null=True)
 		reference_email=models.CharField(max_length=30,blank=True,null=True)
-	   
+
 
 
 
@@ -26,6 +25,3 @@ class FormSubmit(models.Model):
 class ReferenceMail(models.Model):
 	reference_name=models.CharField(max_length=30)
 	reference_email=models.CharField(max_length=30)
-		
-		
-				
