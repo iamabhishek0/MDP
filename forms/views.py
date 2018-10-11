@@ -8,7 +8,6 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.http import HttpResponse
 
-
 def form_view(request):
 	return render(request,'room/book_a_room.html')
 
@@ -27,14 +26,9 @@ def form_submit(request):
 	referencemail=ReferenceMail(reference_name=reference_name,reference_email=reference_email)
 	referencemail.save()
 	formsubmit.save()
-	user = User.objects.create_user(username=name,
-								 email=reference_email,
-								 password='arpitarpit')
-
-	#def create(self, validated_data):
-		#user = User.objects.create(username=validated_data['name'],email=validated_data['reference_email'])
+	user = User.objects.create_user(username=name,email=reference_email,password='arpitarpit')
 	user.is_active = False
-	mail_subject = 'Activate your blog account.'
+	mail_subject = 'IIITM guest house'
 	user.save()
 	message=render_to_string('referencemail.html',{'user': user,
 				'reference_name' : reference_name ,
@@ -46,9 +40,6 @@ def form_submit(request):
 	email.send()
 	return render(request,"room/formsubmitted.html")
 
-
-
-
 def activate(request, uidb64, token):
 	try:
 		uid = force_text(urlsafe_base64_decode(uidb64))
@@ -58,8 +49,6 @@ def activate(request, uidb64, token):
 	if user is not None and account_activation_token.check_token(user, token):
 		user.is_active = True
 		user.save()
-
-		# return redirect('home')
 		return HttpResponse('Thank you for your confirmation')
 	else:
-		return HttpResponse('Activation link is invalid!')
+		return HttpResponse('link is invalid! or You have already confirmed!!')
