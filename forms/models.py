@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.timezone import now
 import datetime
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 class FormSubmit(models.Model):
 	#bookingID = models.CharField(max_length = 15, primary_key = True)
@@ -19,6 +21,7 @@ class FormSubmit(models.Model):
 class Booking(models.Model):
 	bookingID = models.CharField(max_length = 15,blank=True,null=True)
 	roomID = models.CharField(max_length = 15,blank=True,null=True)
+	name = models.CharField(max_length=30,blank=True,null=True)
 	arrive=models.DateField(blank=True,null=True)
 	depart=models.DateTimeField(blank=True,null=True)
 
@@ -30,3 +33,20 @@ class Room(models.Model):
 class ReferenceMail(models.Model):
 	reference_name=models.CharField(max_length=30)
 	reference_email=models.CharField(max_length=30)
+
+
+
+class UserProfile(models.Model):
+	user = models.OneToOneField(User,related_name='userprofile', on_delete=models.CASCADE)
+	reference_verified=models.BooleanField(default=False)
+	director_verified=models.BooleanField(default=False)
+	#other fields here
+
+	def __str__(self):
+		  return "%s's profile" % self.user
+
+def create_user_profile(sender, instance, created, **kwargs):
+	if created:
+	   profile, created = UserProfile.objects.get_or_create(user=instance)
+
+post_save.connect(create_user_profile, sender=User)

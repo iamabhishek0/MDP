@@ -1,5 +1,5 @@
 {% autoescape off %}
-Hi {{reference_name}} , {{ user.username }},
+Hi {{reference_name}} , {{ user.first_name }}
 has requested to book room on your reference to confirm click on the link below
 {{ domain  }}{% url 'activate' uidb64=uid token=token %}
 {% endautoescape %}

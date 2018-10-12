@@ -8,7 +8,7 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.http import HttpResponse
 from dateutil import parser
-
+from random import randint
 def form_view(request):
 	return render(request,'room/book_a_room.html')
 
@@ -39,7 +39,7 @@ def form_submit(request):
 			else:
 				f=0
 		if f == 1:
-			booking = Booking(bookingID = formsubmit.id, roomID = rID, arrive = arrive, depart = depart)
+			booking = Booking(bookingID = formsubmit.id, roomID = rID, name = name, arrive = arrive, depart = depart)
 			booking.save()
 			found = 1
 			break
@@ -49,8 +49,10 @@ def form_submit(request):
 		#room not available
 		pass
 
-	user = User.objects.create_user(username=name,email=reference_email,password='arpitarpit')
+	user = User.objects.create_user(username=name+str(randint(0, 999)),email=reference_email,password='arpitarpit',first_name=name)
 	user.is_active = False
+	user.userprofile.reference_verified= False
+	user.userprofile.director_verified= False
 	mail_subject = 'IIITM guest house'
 	user.save()
 	message=render_to_string('referencemail.html',{'user': user,
@@ -78,6 +80,9 @@ def activate(request, uidb64, token):
 	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
 		user = None
 	if user is not None and account_activation_token.check_token(user, token):
+		profile = user.userprofile
+		profile.reference_verified = True
+		profile.save()
 		user.save()
 		return HttpResponse('Thank you for your confirmation')
 	else:
@@ -89,6 +94,9 @@ def director_activate(request, uidb64,token):
 	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
 		user = None
 	if user is not None :
+		profile = user.userprofile
+		profile.director_verified = True
+		profile.save()
 		user.is_active = True
 		user.save()
 		return HttpResponse('Thank you for your confirmation')
