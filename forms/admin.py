@@ -28,23 +28,26 @@ class ProfileInline(admin.TabularInline):
     can_delete = False
     verbose_name_plural = 'Profile'
     fk_name = 'user'
-class CustomUserAdmin(UserAdmin):
-    inlines = (ProfileInline, )
-    list_display = ( 'id','first_name','email', 'is_staff', 'is_active')
-    list_select_related = ('userprofile', )
+    ordering = ('-id',)
+class UserProfileAdmin(UserAdmin):
+    inlines = [ ProfileInline, ]
+    ordering = ('-id', )
+    fieldsets = (
+            (None, {'fields': ('first_name','email')}),
+    )
 
-    def get_reference_verified(self, instance):
-        return instance.userprofile.reference_verified
-    get_reference_verified.short_description = 'reference_verified'
-    def get_director_verified(self, instance):
-        return instance.userprofile.reference_verified
-    get_director_verified.short_description = 'director_verified'
-
-    def get_inline_instances(self, request, obj=None):
-        if not obj:
-            return list()
-        return super(CustomUserAdmin, self).get_inline_instances(request, obj)
+    def reference_verified(self, obj):
+        try:
+            return obj.userprofile.reference_verified
+        except UserProfile.DoesNotExist:
+            return ''
+    def admin_verified(self, obj):
+        try:
+            return obj.userprofile.director_verified
+        except UserProfile.DoesNotExist:
+            return ''
+    list_display =  ('first_name','id','email','reference_verified','admin_verified')
 
 admin.site.unregister(User)
-admin.site.register(User, CustomUserAdmin)
+admin.site.register(User,UserProfileAdmin)
 admin.site.unregister(Group)

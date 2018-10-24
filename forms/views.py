@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import FormSubmit , ReferenceMail , Room , Booking
+from .models import FormSubmit , ReferenceMail , Room , Booking ,UserProfile
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
@@ -50,9 +50,7 @@ def form_submit(request):
 		pass
 
 	user = User.objects.create_user(username=name+str(randint(0, 999)),email=reference_email,password='arpitarpit',first_name=name)
-	user.is_active = False
-	user.userprofile.reference_verified= False
-	user.userprofile.director_verified= False
+
 	mail_subject = 'IIITM guest house'
 	user.save()
 	message=render_to_string('referencemail.html',{'user': user,
@@ -83,7 +81,6 @@ def activate(request, uidb64, token):
 		profile = user.userprofile
 		profile.reference_verified = True
 		profile.save()
-		user.save()
 		return HttpResponse('Thank you for your confirmation')
 	else:
 		return HttpResponse('link is invalid! or You have already confirmed!!')
@@ -93,12 +90,10 @@ def director_activate(request, uidb64,token):
 		user = User.objects.get(pk=uid)
 	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
 		user = None
-	if user is not None :
+	if user is not None and account_activation_token.check_token(user, token):
 		profile = user.userprofile
 		profile.director_verified = True
 		profile.save()
-		user.is_active = True
-		user.save()
 		return HttpResponse('Thank you for your confirmation')
 	else:
 		return HttpResponse('link is invalid! or You have already confirmed!!')

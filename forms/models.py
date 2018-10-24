@@ -40,6 +40,8 @@ class UserProfile(models.Model):
 	user = models.OneToOneField(User,related_name='userprofile', on_delete=models.CASCADE)
 	reference_verified=models.BooleanField(default=False)
 	director_verified=models.BooleanField(default=False)
+
+
 	#other fields here
 
 	def __str__(self):
