@@ -19,8 +19,8 @@ def form_submit(request):
 	street=request.POST["street"]
 	city=request.POST["city"]
 	pincode=request.POST["post-code"]
-	arrive=request.POST["arrive"]
-	depart=request.POST["depart"]
+	arrive=parser.parse(request.POST["arrive"]).date()
+	depart = parser.parse(request.POST["depart"]).date()
 	room_type = request.POST["room_type"]
 	reference_name=request.POST["reference_name"]
 	reference_email=request.POST["reference_email"]
@@ -34,7 +34,7 @@ def form_submit(request):
 		f = 1
 		rID = r.roomID
 		for b in Booking.objects.raw('SELECT * FROM forms_booking WHERE roomID = %s', [rID]):
-			if(b.arrive > parser.parse(depart).date() or b.depart.date() < parser.parse(arrive).date()):
+			if(b.arrive > depart or b.depart < arrive):
 				pass
 			else:
 				f=0

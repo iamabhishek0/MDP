@@ -23,7 +23,7 @@ class Booking(models.Model):
 	roomID = models.CharField(max_length = 15,blank=True,null=True)
 	name = models.CharField(max_length=30,blank=True,null=True)
 	arrive=models.DateField(blank=True,null=True)
-	depart=models.DateTimeField(blank=True,null=True)
+	depart=models.DateField(blank=True,null=True)
 
 class Room(models.Model):
 	roomID = models.CharField(max_length = 15,blank=True,null=True)
