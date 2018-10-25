@@ -46,11 +46,21 @@ def form_submit(request):
 		if found == 1:
 			break
 	if found == 0:
+		HttpResponse('Sorry no rooms available for requested dates')
 		#room not available
-		pass
 
-	user = User.objects.create_user(username=name+str(randint(0, 999)),email=reference_email,password='arpitarpit',first_name=name)
 
+	user = User.objects.create_user(username=name+str(randint(0, 999)),email=email,password='arpitarpit',first_name=name)
+	profile = user.userprofile
+	profile.street=street
+	profile.city=city
+	profile.pincode=pincode
+	profile.arrive=arrive
+	profile.depart=depart
+	profile.number=number
+	profile.reference_name=reference_name
+	profile.reference_email=reference_email
+	profile.save()
 	mail_subject = 'IIITM guest house'
 	user.save()
 	message=render_to_string('referencemail.html',{'user': user,
@@ -80,6 +90,21 @@ def activate(request, uidb64, token):
 	if user is not None and account_activation_token.check_token(user, token):
 		profile = user.userprofile
 		profile.reference_verified = True
+		if profile.director_verified:
+			profile.verified = True
+			if not profile.booking_mail_sent:
+				mail_subject = 'IIITM guest house'
+				message=render_to_string('booking_mail.html',{'user': user,
+				'arrive': profile.arrive,
+				'depart' : profile.depart
+
+				,})
+				to_email=user.email
+				profile.booking_mail_sent= True
+				email=EmailMessage(mail_subject,message,to=[to_email])
+				email.send()
+
+
 		profile.save()
 		return HttpResponse('Thank you for your confirmation')
 	else:
@@ -93,6 +118,20 @@ def director_activate(request, uidb64,token):
 	if user is not None and account_activation_token.check_token(user, token):
 		profile = user.userprofile
 		profile.director_verified = True
+		if profile.reference_verified:
+			profile.verified = True
+			if not profile.booking_mail_sent:
+				mail_subject = 'IIITM guest house'
+				message=render_to_string('booking_mail.html',{'user': user,
+				'arrive': profile.arrive,
+				'depart' : profile.depart
+
+				,})
+				to_email=user.email
+				profile.booking_mail_sent= True
+				email=EmailMessage(mail_subject,message,to=[to_email])
+				email.send()
+
 		profile.save()
 		return HttpResponse('Thank you for your confirmation')
 	else:

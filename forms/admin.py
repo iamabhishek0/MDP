@@ -23,7 +23,7 @@ admin.site.register(Room,RoomEntry)
 admin.site.register(Booking,BookingEntry)
 
 
-class ProfileInline(admin.TabularInline):
+class ProfileInline(admin.StackedInline):
     model = UserProfile
     can_delete = False
     verbose_name_plural = 'Profile'
@@ -46,7 +46,12 @@ class UserProfileAdmin(UserAdmin):
             return obj.userprofile.director_verified
         except UserProfile.DoesNotExist:
             return ''
-    list_display =  ('first_name','id','email','reference_verified','admin_verified')
+    def verified(self, obj):
+        try:
+            return obj.userprofile.verified
+        except UserProfile.DoesNotExist:
+            return ''
+    list_display =  ('first_name','id','email','reference_verified','admin_verified','verified')
 
 admin.site.unregister(User)
 admin.site.register(User,UserProfileAdmin)
