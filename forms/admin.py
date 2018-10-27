@@ -1,12 +1,11 @@
 from django.contrib import admin
-from .models import FormSubmit , ReferenceMail, Booking , Room
+from .models import FormSubmit , ReferenceMail, Booking , Room,UserProfile
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.admin import UserAdmin
 from  .models import UserProfile
 
 admin.site.site_header = "MDP ADMIN PAGE";
 admin.site.site_title = "ADMISTRATOR";
-
 
 class AllEntiryAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "email","arrive","depart","reference_name","reference_email")
@@ -29,8 +28,11 @@ class ProfileInline(admin.StackedInline):
     verbose_name_plural = 'Profile'
     fk_name = 'user'
     ordering = ('-id',)
+class BookinInLine(admin.StackedInline):
+    model = Booking
+    can_delete = False
 class UserProfileAdmin(UserAdmin):
-    inlines = [ ProfileInline, ]
+    inlines = [ ProfileInline, BookinInLine,]
     ordering = ('-id', )
     fieldsets = (
             (None, {'fields': ('first_name','email')}),
@@ -51,7 +53,12 @@ class UserProfileAdmin(UserAdmin):
             return obj.userprofile.verified
         except UserProfile.DoesNotExist:
             return ''
-    list_display =  ('first_name','id','email','reference_verified','admin_verified','verified')
+    def room(self, obj):
+        try:
+            return obj.booking_profile.roomID
+        except Booking.DoesNotExist:
+            return ''
+    list_display =  ('first_name','id','email','reference_verified','admin_verified','verified','room')
 
 admin.site.unregister(User)
 admin.site.register(User,UserProfileAdmin)

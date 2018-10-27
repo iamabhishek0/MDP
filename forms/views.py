@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import FormSubmit , ReferenceMail , Room , Booking ,UserProfile
+from .models import FormSubmit, ReferenceMail , Room , Booking ,UserProfile
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
@@ -29,6 +29,9 @@ def form_submit(request):
 	referencemail.save()
 	formsubmit.save()
 
+
+	user = User.objects.create_user(username=name+str(randint(0, 999)),email=email,password='arpitarpit',first_name=name)
+
 	found = 0
 	for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
 		f = 1
@@ -40,7 +43,13 @@ def form_submit(request):
 				f=0
 		if f == 1:
 			booking = Booking(bookingID = formsubmit.id, roomID = rID, name = name, arrive = arrive, depart = depart)
-			booking.save()
+			booking_profile = user.booking_profile
+			booking_profile.bookingID=formsubmit.id
+			booking_profile.roomID=rID
+			booking_profile.name=name
+			booking_profile.arrive=arrive
+			booking_profile.depart=depart
+			booking_profile.save()
 			found = 1
 			break
 		if found == 1:
@@ -50,7 +59,6 @@ def form_submit(request):
 		#room not available
 
 
-	user = User.objects.create_user(username=name+str(randint(0, 999)),email=email,password='arpitarpit',first_name=name)
 	profile = user.userprofile
 	profile.street=street
 	profile.city=city
@@ -63,6 +71,7 @@ def form_submit(request):
 	profile.save()
 	mail_subject = 'IIITM guest house'
 	user.save()
+
 	message=render_to_string('referencemail.html',{'user': user,
 				'reference_name' : reference_name ,
 				'domain': '127.0.0.1:8000',
@@ -117,6 +126,7 @@ def director_activate(request, uidb64,token):
 		user = None
 	if user is not None and account_activation_token.check_token(user, token):
 		profile = user.userprofile
+		booking_profile=user.booking_profile
 		profile.director_verified = True
 		if profile.reference_verified:
 			profile.verified = True
@@ -124,7 +134,8 @@ def director_activate(request, uidb64,token):
 				mail_subject = 'IIITM guest house'
 				message=render_to_string('booking_mail.html',{'user': user,
 				'arrive': profile.arrive,
-				'depart' : profile.depart
+				'depart' : profile.depart,
+				'roomID' : booking_profile.roomID
 
 				,})
 				to_email=user.email

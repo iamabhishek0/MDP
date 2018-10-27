@@ -3,9 +3,11 @@ from django.utils.timezone import now
 import datetime
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.conf import settings
+
+
 
 class FormSubmit(models.Model):
-	#bookingID = models.CharField(max_length = 15, primary_key = True)
 	name=models.CharField(max_length=30)
 	email=models.CharField(max_length=30)
 	street=models.TextField(max_length=300)
@@ -20,25 +22,17 @@ class FormSubmit(models.Model):
 
 
 class Booking(models.Model):
+	user =models.OneToOneField(User,related_name='booking_profile', on_delete=models.CASCADE,)
 	bookingID = models.CharField(max_length = 15,blank=True,null=True)
 	roomID = models.CharField(max_length = 15,blank=True,null=True)
 	name = models.CharField(max_length=30,blank=True,null=True)
 	arrive=models.DateField(blank=True,null=True)
 	depart=models.DateField(blank=True,null=True)
-
-class Room(models.Model):
-	roomID = models.CharField(max_length = 15,blank=True,null=True)
-	room_type = models.CharField(max_length = 5,blank=True,null=True)
-	status = models.CharField(max_length = 15,blank=True,null=True)
-
-class ReferenceMail(models.Model):
-	reference_name=models.CharField(max_length=30)
-	reference_email=models.CharField(max_length=30)
-
 class UserProfile(models.Model):
-	user = models.OneToOneField(User,related_name='userprofile', on_delete=models.CASCADE)
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	reference_verified=models.BooleanField(default=False)
 	director_verified=models.BooleanField(default=False)
+#	is_member=models.BooleanField(default=False)
 	verified=models.BooleanField(default=False)
 	booking_mail_sent=models.BooleanField(default=False)
 	street=models.TextField(max_length=300,blank=True,null=True)
@@ -49,6 +43,7 @@ class UserProfile(models.Model):
 	depart=models.DateField(blank=True,null=True)
 	reference_name=models.CharField(max_length=30,blank=True,null=True)
 	reference_email=models.CharField(max_length=30,blank=True,null=True)
+
 	#room_type = models.CharField(max_length = 5,blank=True,null=True)
 
 	#other fields here
@@ -59,5 +54,15 @@ class UserProfile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
 	if created:
 	   profile, created = UserProfile.objects.get_or_create(user=instance)
+	   profile, created = Booking.objects.get_or_create(user=instance)
 
 post_save.connect(create_user_profile, sender=User)
+
+class Room(models.Model):
+	roomID = models.CharField(max_length = 15,blank=True,null=True)
+	room_type = models.CharField(max_length = 5,blank=True,null=True)
+	status = models.CharField(max_length = 15,blank=True,null=True)
+
+class ReferenceMail(models.Model):
+	reference_name=models.CharField(max_length=30)
+	reference_email=models.CharField(max_length=30)
