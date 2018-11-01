@@ -25,7 +25,7 @@ urlpatterns = [
      path('bookroom/',include('forms.urls')),
      path('director/',include('forms.urls')),
      path('admin/', admin.site.urls),
-
+     path('membership/',include('members.url')),
 
 
 ]

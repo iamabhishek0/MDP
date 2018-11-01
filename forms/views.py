@@ -29,7 +29,6 @@ def form_submit(request):
 	referencemail.save()
 	formsubmit.save()
 
-
 	user = User.objects.create_user(username=name+str(randint(0, 999)),email=email,password='arpitarpit',first_name=name)
 
 	found = 0
@@ -37,9 +36,11 @@ def form_submit(request):
 		f = 1
 		rID = r.roomID
 		for b in Booking.objects.raw('SELECT * FROM forms_booking WHERE roomID = %s', [rID]):
+
 			if(b.arrive > depart or b.depart < arrive):
 				pass
 			else:
+
 				f=0
 		if f == 1:
 			booking = Booking(bookingID = formsubmit.id, roomID = rID, name = name, arrive = arrive, depart = depart)
@@ -106,13 +107,11 @@ def activate(request, uidb64, token):
 				message=render_to_string('booking_mail.html',{'user': user,
 				'arrive': profile.arrive,
 				'depart' : profile.depart
-
 				,})
 				to_email=user.email
 				profile.booking_mail_sent= True
 				email=EmailMessage(mail_subject,message,to=[to_email])
 				email.send()
-
 
 		profile.save()
 		return HttpResponse('Thank you for your confirmation')

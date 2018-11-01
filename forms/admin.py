@@ -20,7 +20,7 @@ admin.site.register(FormSubmit,AllEntiryAdmin)
 admin.site.register(ReferenceMail,AllEntiryAdmin1)
 admin.site.register(Room,RoomEntry)
 admin.site.register(Booking,BookingEntry)
-
+admin.site.register(UserProfile)
 
 class ProfileInline(admin.StackedInline):
     model = UserProfile
@@ -28,9 +28,11 @@ class ProfileInline(admin.StackedInline):
     verbose_name_plural = 'Profile'
     fk_name = 'user'
     ordering = ('-id',)
+
 class BookinInLine(admin.StackedInline):
     model = Booking
     can_delete = False
+
 class UserProfileAdmin(UserAdmin):
     inlines = [ ProfileInline, BookinInLine,]
     ordering = ('-id', )
