@@ -41,7 +41,7 @@ class UserProfile(models.Model):
 	reference_name=models.CharField(max_length=30,blank=True,null=True)
 	reference_email=models.CharField(max_length=30,blank=True,null=True)
 	is_member=models.BooleanField(default=False)
-
+	applied_for_member=models.BooleanField(default=False)
 	#room_type = models.CharField(max_length = 5,blank=True,null=True)
 
 	#other fields here

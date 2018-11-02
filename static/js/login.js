@@ -1,25 +1,7 @@
 /*global $, document, window, setTimeout, navigator, console, location*/
 $(document).ready(function () {
-  (function($){
-    function floatLabel(inputType){
-      $(inputType).each(function(){
-        var $this = $(this);
-        // on focus add cladd active to label
-        $this.focus(function(){
-          $this.next().addClass("active");
-        });
-        //on blur check field and remove class if needed
-        $this.blur(function(){
-          if($this.val() === '' || $this.val() === 'blank'){
-            $this.next().removeClass();
-          }
-        });
-      });
-    }
-    // just add a class of "floatLabel to the input field!"
-    floatLabel(".floatLabel");
-  })(jQuery);
-/*    'use strict';
+
+    'use strict';
 
     var usernameError = true,
         emailError    = true,
@@ -91,7 +73,7 @@ $(document).ready(function () {
             $(this).siblings('label').removeClass('active');
         }
     });
-*/
+
 
     // form switch
     $('a.switch').click(function (e) {
@@ -106,8 +88,8 @@ $(document).ready(function () {
     });
 
 
-    // Form submit
-/*   $('form.signup-form').submit(function (event) {
+/*    // Form submit
+    $('form.signup-form').submit(function (event) {
         event.preventDefault();
 
         if (usernameError == true || emailError == true || passwordError == true || passConfirm == true) {
@@ -122,12 +104,12 @@ $(document).ready(function () {
             setTimeout(function () { $('.success-msg a').addClass('active'); }, 1050);
             setTimeout(function () { $('.form').hide(); }, 700);
         }
-    });*/
+    });
 
     // Reload page
-//    $('a.profile').on('click', function () {
-  //      location.reload(true);
-  //  });
-
+    $('a.profile').on('click', function () {
+        location.reload(true);
+    });
+*/
 
 });

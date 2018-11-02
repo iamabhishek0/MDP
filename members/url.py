@@ -4,8 +4,9 @@ from members import view
 
 
 urlpatterns = [
-     url(r'^$', view.login, name='login'),
+     url(r'^$', view.login_member, name='login_member'),
      path('register/',view.register,name='register'),
+     path('login/',view.login_,name='login'),
     # path('register/',views.register,name='register'),
 
 ]

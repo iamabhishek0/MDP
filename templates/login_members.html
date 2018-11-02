@@ -41,15 +41,16 @@
 
             <!-- Login Form -->
             <div class="login form-peice switched">
-               <form class="login-form" action="" method="post">
+               <form class="login-form" action="login/" method="post">
+                 {% csrf_token %}
                   <div class="form-group">
-                     <label for="loginemail">Email Adderss</label>
-                     <input type="email" name="loginemail" id="loginemail" required>
+                     <label for="loginusername">Username</label>
+                     <input type="name" name="username" id="username" required>
                   </div>
 
                   <div class="form-group">
                      <label for="loginPassword">Password</label>
-                     <input type="password" name="loginPassword" id="loginPassword" required>
+                     <input type="password" name="password" id="password" required>
                   </div>
 
                   <div class="CTA">
@@ -147,16 +148,11 @@
       <p>
       </p>
    </footer>
-
 </div>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
-<!--<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>-->
-
-    <script  src="{% static 'js/login.js' %}"></script>
-
-
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+<script  src="{% static 'js/login.js' %}"></script>
 
 
 </body>
-
 </html>

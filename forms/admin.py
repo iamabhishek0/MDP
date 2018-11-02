@@ -55,13 +55,24 @@ class UserProfileAdmin(UserAdmin):
             return obj.userprofile.verified
         except UserProfile.DoesNotExist:
             return ''
+    def applied_for_member(self, obj):
+        try:
+            return obj.userprofile.applied_for_member
+        except UserProfile.DoesNotExist:
+            return ''
+    def is_member(self, obj):
+        try:
+            return obj.userprofile.is_member
+        except UserProfile.DoesNotExist:
+            return ''
     def room(self, obj):
         try:
             return obj.booking_profile.roomID
         except Booking.DoesNotExist:
             return ''
-    list_display =  ('first_name','id','email','reference_verified','admin_verified','verified','room')
+    list_display =  ('first_name','id','email','reference_verified','admin_verified','verified','room','applied_for_member','is_member')
+    list_filter =('userprofile__is_member',)
 
 admin.site.unregister(User)
 admin.site.register(User,UserProfileAdmin)
-admin.site.unregister(Group)
+#admin.site.unregister(Group)
