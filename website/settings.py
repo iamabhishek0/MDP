@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'forms',
-    'members'
+    'members',
+    
 ]
 AUTH_PROFILE_MODULE = 'forms.UserProfile'
 MIDDLEWARE = [

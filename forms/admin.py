@@ -37,7 +37,7 @@ class UserProfileAdmin(UserAdmin):
     inlines = [ ProfileInline, BookinInLine,]
     ordering = ('-id', )
     fieldsets = (
-            (None, {'fields': ('first_name','email')}),
+            (None, {'fields': ('first_name','email', 'password')}),
     )
 
     def reference_verified(self, obj):
@@ -45,6 +45,7 @@ class UserProfileAdmin(UserAdmin):
             return obj.userprofile.reference_verified
         except UserProfile.DoesNotExist:
             return ''
+    reference_verified.Boolean = True
     def admin_verified(self, obj):
         try:
             return obj.userprofile.director_verified
@@ -67,7 +68,7 @@ class UserProfileAdmin(UserAdmin):
             return ''
     def room(self, obj):
         try:
-            return obj.booking_profile.roomID
+            return obj.booking_profile.get().roomID
         except Booking.DoesNotExist:
             return ''
     list_display =  ('first_name','id','email','reference_verified','admin_verified','verified','room','applied_for_member','is_member')

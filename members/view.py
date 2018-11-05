@@ -7,12 +7,13 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from forms.tokens import account_activation_token
 from django.template.loader import render_to_string
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login ,logout
 
 
 def login_member(request):
 	return render(request,'login_members.html')
 def login_(request):
+
 	username = request.POST.get('username')
 	password = request.POST.get('password')
 	user = authenticate(request, username=username, password=password)
@@ -20,7 +21,8 @@ def login_(request):
 
 	if user is not  None and profile.is_member is True :
 		login( request , user)
-		return HttpResponse('you are a member')
+		return HttpResponse('vy')
+
 		# Redirect to a success page.
 		...
 	else:
@@ -39,11 +41,11 @@ def register(request):
 	username=request.POST["username"]
 	password=request.POST["password"]
 	repass=request.POST["repassword"]
-	def username_present(username):
-		if User.objects.filter(username=username).exists():
-			return HttpResponse('Sorry no rooms available for requested dates')
 
-		return False
+	if User.objects.filter(username=username).exists():
+		return HttpResponse('Username not available')
+
+
 	user = User.objects.create_user(username=username,email=email,password=password,first_name=name)
 	profile = user.userprofile
 	profile.street=street
@@ -64,7 +66,7 @@ def register(request):
 	email=EmailMessage(mail_subject,message,to=['imarpit02@gmail.com'])
 	email.send()
 
-	return render(request,'login_members.html')
+	return  HttpResponse('Thank you for applying ')
 def member_activate(request, uidb64, token):
 	try:
 		uid = force_text(urlsafe_base64_decode(uidb64))

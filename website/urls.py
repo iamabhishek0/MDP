@@ -27,5 +27,4 @@ urlpatterns = [
      path('admin/', admin.site.urls),
      path('membership/',include('members.url')),
 
-
 ]
