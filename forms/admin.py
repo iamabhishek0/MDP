@@ -7,20 +7,22 @@ from  .models import UserProfile
 admin.site.site_header = "MDP ADMIN PAGE";
 admin.site.site_title = "ADMISTRATOR";
 
-class AllEntiryAdmin(admin.ModelAdmin):
+class AllEntryAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "email","arrive","depart","reference_name","reference_email")
-class AllEntiryAdmin1(admin.ModelAdmin):
+class AllEntryAdmin1(admin.ModelAdmin):
     list_display = ( "reference_name","reference_email")
 class RoomEntry(admin.ModelAdmin):
     list_display = ( "roomID", "room_type", "status")
 class BookingEntry(admin.ModelAdmin):
     list_display = ( "bookingID", "roomID", "name", "arrive", "depart")
+class UserProfileEntry(admin.ModelAdmin):
+    list_display = ("user", "verified", "booking_mail_sent", "arrive", "depart", "street", "city", "reference_email")
 
-admin.site.register(FormSubmit,AllEntiryAdmin)
-admin.site.register(ReferenceMail,AllEntiryAdmin1)
+admin.site.register(FormSubmit,AllEntryAdmin)
+admin.site.register(ReferenceMail,AllEntryAdmin1)
 admin.site.register(Room,RoomEntry)
 admin.site.register(Booking,BookingEntry)
-admin.site.register(UserProfile)
+admin.site.register(UserProfile,UserProfileEntry)
 
 class ProfileInline(admin.StackedInline):
     model = UserProfile
@@ -68,7 +70,7 @@ class UserProfileAdmin(UserAdmin):
             return ''
     def room(self, obj):
         try:
-            return obj.booking_profile.get().roomID
+            return obj.booking_profile.roomID
         except Booking.DoesNotExist:
             return ''
     list_display =  ('first_name','id','email','reference_verified','admin_verified','verified','room','applied_for_member','is_member')

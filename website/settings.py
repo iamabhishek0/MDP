@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'home',
     'forms',
     'members',
-    
+
 ]
 AUTH_PROFILE_MODULE = 'forms.UserProfile'
 MIDDLEWARE = [
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'website.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Form3',
+        'NAME': 'Form',
         'USER': 'arpit',
         'PASSWORD': 'arpitarpit',
         'HOST': 'localhost',

@@ -43,7 +43,6 @@ def form_submit(request):
 
 				f=0
 		if f == 1:
-			booking = Booking(bookingID = formsubmit.id, roomID = rID, name = name, arrive = arrive, depart = depart)
 			booking_profile = user.booking_profile
 			booking_profile.bookingID=formsubmit.id
 			booking_profile.roomID=rID
