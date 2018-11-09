@@ -19,12 +19,12 @@ class FormSubmit(models.Model):
 	room_type = models.CharField(max_length = 5,blank=True,null=True)
 
 class Booking(models.Model):
-	user =models.OneToOneField(User,related_name='booking_profile', on_delete=models.CASCADE)
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	bookingID = models.CharField(max_length = 15,blank=True,null=True)
 	roomID = models.CharField(max_length = 15,blank=True,null=True)
 	name = models.CharField(max_length=30,blank=True,null=True)
-	arrive=models.DateField(blank=True,null=True)
-	depart=models.DateField(blank=True,null=True)
+	arrive = models.DateField(blank=True,null=True)
+	depart = models.DateField(blank=True,null=True)
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)

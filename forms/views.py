@@ -43,13 +43,18 @@ def form_submit(request):
 
 				f=0
 		if f == 1:
-			booking_profile = user.booking_profile
-			booking_profile.bookingID=formsubmit.id
-			booking_profile.roomID=rID
-			booking_profile.name=name
-			booking_profile.arrive=arrive
-			booking_profile.depart=depart
-			booking_profile.save()
+			booking = user.booking_set.create(
+			bookingID=formsubmit.id,
+			roomID=rID,
+			name=name,
+			arrive=arrive,
+			depart=depart)
+			'''booking.bookingID=formsubmit.id
+			booking.roomID=rID
+			booking.name=name
+			booking.arrive=arrive
+			booking.depart=depart'''
+			#User.objects.get(id = user.id).booking_set.add(booking)
 			found = 1
 			break
 		if found == 1:
@@ -124,7 +129,7 @@ def director_activate(request, uidb64,token):
 		user = None
 	if user is not None and account_activation_token.check_token(user, token):
 		profile = user.userprofile
-		booking_profile=user.booking_profile
+		booking=user.booking
 		profile.director_verified = True
 		if profile.reference_verified:
 			profile.verified = True
@@ -133,7 +138,7 @@ def director_activate(request, uidb64,token):
 				message=render_to_string('booking_mail.html',{'user': user,
 				'arrive': profile.arrive,
 				'depart' : profile.depart,
-				'roomID' : booking_profile.roomID
+				'roomID' : booking.roomID
 
 				,})
 				to_email=user.email
