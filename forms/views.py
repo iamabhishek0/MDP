@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import FormSubmit, ReferenceMail , Room , Booking ,UserProfile
+from .models import FormSubmit, Room , Booking ,UserProfile
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
@@ -25,8 +25,6 @@ def form_submit(request):
 	reference_name=request.POST["reference_name"]
 	reference_email=request.POST["reference_email"]
 	formsubmit=FormSubmit(name=name,email=email,number=number,street=street,city=city,pincode=pincode,arrive=arrive,depart=depart,reference_email=reference_email,reference_name=reference_name)
-	referencemail=ReferenceMail(reference_name=reference_name,reference_email=reference_email)
-	referencemail.save()
 	formsubmit.save()
 
 	user = User.objects.create_user(username=name+str(randint(0, 999)),email=email,password='arpitarpit',first_name=name)
@@ -43,24 +41,20 @@ def form_submit(request):
 
 				f=0
 		if f == 1:
-			booking = user.booking_set.create(
-			bookingID=formsubmit.id,
-			roomID=rID,
-			name=name,
-			arrive=arrive,
-			depart=depart)
-			'''booking.bookingID=formsubmit.id
+			booking = Booking.objects.get(user=user)
+			booking.bookingID=formsubmit.id
 			booking.roomID=rID
 			booking.name=name
 			booking.arrive=arrive
-			booking.depart=depart'''
+			booking.depart=depart
+			booking.save()
 			#User.objects.get(id = user.id).booking_set.add(booking)
 			found = 1
 			break
 		if found == 1:
 			break
 	if found == 0:
-		HttpResponse('Sorry no rooms available for requested dates')
+		return HttpResponse('Sorry no rooms available for requested dates')
 		#room not available
 
 
@@ -109,6 +103,9 @@ def activate(request, uidb64, token):
 			if not profile.booking_mail_sent:
 				mail_subject = 'IIITM guest house'
 				message=render_to_string('booking_mail.html',{'user': user,
+				'domain': '127.0.0.1:8000/director/cancel',
+				'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+				'token': account_activation_token.make_token(user),
 				'arrive': profile.arrive,
 				'depart' : profile.depart
 				,})
@@ -129,7 +126,7 @@ def director_activate(request, uidb64,token):
 		user = None
 	if user is not None and account_activation_token.check_token(user, token):
 		profile = user.userprofile
-		booking=user.booking
+		booking = Booking.objects.get(user=user)
 		profile.director_verified = True
 		if profile.reference_verified:
 			profile.verified = True
@@ -137,8 +134,11 @@ def director_activate(request, uidb64,token):
 				mail_subject = 'IIITM guest house'
 				message=render_to_string('booking_mail.html',{'user': user,
 				'arrive': profile.arrive,
+				'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+				'token': account_activation_token.make_token(user),
 				'depart' : profile.depart,
-				'roomID' : booking.roomID
+				'roomID' : booking.roomID,
+				'domain': '127.0.0.1:8000/director/cancel'
 
 				,})
 				to_email=user.email
@@ -150,3 +150,22 @@ def director_activate(request, uidb64,token):
 		return HttpResponse('Thank you for your confirmation')
 	else:
 		return HttpResponse('link is invalid! or You have already confirmed!!')
+def cancel_booking(request, uidb64,token):
+	try:
+		uid = force_text(urlsafe_base64_decode(uidb64))
+		user = User.objects.get(pk=uid)
+	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+		user = None
+	if user is not None and account_activation_token.check_token(user, token):
+		try:
+			booking = Booking.objects.get(user=user)
+
+		except Booking.DoesNotExist:
+			booking = None
+
+
+		if booking is not None:
+			booking.delete()
+			return HttpResponse('cancelled')
+		if booking is None:
+			return HttpResponse('already cancelled')

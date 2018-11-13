@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'website.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Form',
+        'NAME': 'form5',
         'USER': 'arpit',
         'PASSWORD': 'arpitarpit',
         'HOST': 'localhost',

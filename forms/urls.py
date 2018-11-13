@@ -12,5 +12,8 @@ urlpatterns = [
         views.director_activate, name='director_activate'),
      url(r'^member/director/activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
            view.member_activate, name='member_activate'),
+     url(r'^cancel/director/activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.cancel_booking ,name='cancel_booking'),
+
 
      ]

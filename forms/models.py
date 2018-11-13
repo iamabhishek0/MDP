@@ -19,7 +19,7 @@ class FormSubmit(models.Model):
 	room_type = models.CharField(max_length = 5,blank=True,null=True)
 
 class Booking(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
 	bookingID = models.CharField(max_length = 15,blank=True,null=True)
 	roomID = models.CharField(max_length = 15,blank=True,null=True)
 	name = models.CharField(max_length=30,blank=True,null=True)
@@ -60,7 +60,3 @@ class Room(models.Model):
 	roomID = models.CharField(max_length = 15,blank=True,null=True)
 	room_type = models.CharField(max_length = 5,blank=True,null=True)
 	status = models.CharField(max_length = 15,blank=True,null=True)
-
-class ReferenceMail(models.Model):
-	reference_name=models.CharField(max_length=30)
-	reference_email=models.CharField(max_length=30)

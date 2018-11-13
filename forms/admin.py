@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import FormSubmit , ReferenceMail, Booking , Room,UserProfile
+from .models import FormSubmit , Booking , Room,UserProfile
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.admin import UserAdmin
 from  .models import UserProfile
@@ -19,7 +19,6 @@ class UserProfileEntry(admin.ModelAdmin):
     list_display = ("user", "verified", "booking_mail_sent", "arrive", "depart", "street", "city", "reference_email")
 
 admin.site.register(FormSubmit,AllEntryAdmin)
-admin.site.register(ReferenceMail,AllEntryAdmin1)
 admin.site.register(Room,RoomEntry)
 admin.site.register(Booking,BookingEntry)
 admin.site.register(UserProfile,UserProfileEntry)
@@ -47,7 +46,6 @@ class UserProfileAdmin(UserAdmin):
             return obj.userprofile.reference_verified
         except UserProfile.DoesNotExist:
             return ''
-    reference_verified.Boolean = True
     def admin_verified(self, obj):
         try:
             return obj.userprofile.director_verified
@@ -70,7 +68,7 @@ class UserProfileAdmin(UserAdmin):
             return ''
     def room(self, obj):
         try:
-            return obj.booking.roomID
+            return obj.booking_set.get().roomID
         except Booking.DoesNotExist:
             return ''
     list_display =  ('first_name','id','email','reference_verified','admin_verified','verified','room','applied_for_member','is_member')
@@ -78,4 +76,4 @@ class UserProfileAdmin(UserAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User,UserProfileAdmin)
-#admin.site.unregister(Group)
+admin.site.unregister(Group)
