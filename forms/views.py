@@ -9,6 +9,7 @@ from .tokens import account_activation_token
 from django.http import HttpResponse
 from dateutil import parser
 from random import randint
+from forms.task import send_verification_email
 def form_view(request):
 	return render(request,'room/book_a_room.html')
 
@@ -57,7 +58,6 @@ def form_submit(request):
 		return HttpResponse('Sorry no rooms available for requested dates')
 		#room not available
 
-
 	profile = user.userprofile
 	profile.street=street
 	profile.city=city
@@ -68,25 +68,11 @@ def form_submit(request):
 	profile.reference_name=reference_name
 	profile.reference_email=reference_email
 	profile.save()
-	mail_subject = 'IIITM guest house'
+	
 	user.save()
+	send_verification_email.delay(user.username)
 
-	message=render_to_string('referencemail.html',{'user': user,
-				'reference_name' : reference_name ,
-				'domain': '127.0.0.1:8000',
-				'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-				'token': account_activation_token.make_token(user),})
-	message_director=render_to_string('director_mail.html',{'user': user,
-				'reference_name' : reference_name ,
-				'domain': '127.0.0.1:8000/director',
-				'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-				'token': account_activation_token.make_token(user),})
-	to_email=reference_email
 
-	email=EmailMessage(mail_subject,message,to=[to_email])
-	email_director=EmailMessage(mail_subject,message_director,to=['imarpit02@gmail.com'])
-	email.send()
-	email_director.send()
 	return render(request,"room/formsubmitted.html")
 
 def activate(request, uidb64, token):
