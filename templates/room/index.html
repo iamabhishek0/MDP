@@ -10,6 +10,7 @@
 	{% load static %}
 	<link href="{% static 'css/bootstrap-responsive.css' %}" rel="stylesheet">
 	<link href="{% static 'css/style.css' %}" rel="stylesheet">
+
 	<link href="{% static 'color/default.css' %}" rel="stylesheet">
 	<link rel="shortcut icon" href="{% static 'img/logo-image.png' %}">
 	<!-- =======================================================
@@ -229,6 +230,41 @@
         transform: scale(1);
     }
 }
+.dropbtn {
+    background-color: #ffffff00;
+    color: white;
+    padding: 13px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
 
 /* -------------------------------------- */
 
@@ -256,12 +292,18 @@
 							<li><a title="rooms" href="#rooms">Rooms</a></li>
 							<li><a title="services" href="#services">Services</a></li>
 
-							<li><a title="Book Your Room" href="/bookroom/">Book Your Room</a></li>
-
+							<!--<li><a title="Book Your Room" href="/bookroom/">BOOK YOUR ROOM</a></li>-->
+							 <li><div class="dropdown">
+  <button class="dropbtn">BOOK YOUR ROOM</button>
+  <div class="dropdown-content">
+    <a href="/bookroom/">Non-Vip Guest</a>
+    <a href="/vipform/">Vip Guest</a>
+  </div>
+</div></li>
 
 						<!--	<li><a title="blog" href="#blog">Blog</a></li>	-->
 							<li><a title="contact" href="#contact">Contact</a></li>
-							<li><a href="page.html">Photo Gallery</a></li>
+							<li><a href="/bill/">Bill Genrate</a></li>
 							<li><a title="Admin login" href="/admin/">Administrative Login </a></li>
 							<li><a title="Members" href="/membership/">Members </a></li>
 						</ul>
@@ -1057,6 +1099,31 @@ Double Occupancy : 750/-</strong>
 
 
 	    <script  src="{% static 'js/index_slider.js' %}"></script>
+	    <script type="text/javascript">
+	    	(function($) { // Begin jQuery
+  $(function() { // DOM ready
+    // If a link has a dropdown, add sub menu toggle.
+    $('nav ul li a:not(:only-child)').click(function(e) {
+      $(this).siblings('.nav-dropdown').toggle();
+      // Close one dropdown when selecting another
+      $('.nav-dropdown').not($(this).siblings()).hide();
+      e.stopPropagation();
+    });
+    // Clicking away from dropdown will remove the dropdown class
+    $('html').click(function() {
+      $('.nav-dropdown').hide();
+    });
+    // Toggle open and close nav styles on click
+    $('#nav-toggle').click(function() {
+      $('nav ul').slideToggle();
+    });
+    // Hamburger to X toggle
+    $('#nav-toggle').on('click', function() {
+      this.classList.toggle('active');
+    });
+  }); // end DOM ready
+})(jQuery); // end jQuery
+	    </script>
 
 </body>
 

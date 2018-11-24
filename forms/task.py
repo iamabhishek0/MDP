@@ -13,6 +13,7 @@ from .tokens import account_activation_token
 from django.utils.encoding import force_bytes, force_text
 from dateutil import parser
 from django.utils.timezone import datetime
+from easy_pdf.views import PDFTemplateView
 @app.task
 def send_verification_email(user_id):
 	user=User.objects.get(username=user_id)
@@ -46,3 +47,13 @@ def send_feedback():
 			mail_subject = 'Feedback'
 			email=EmailMessage(mail_subject,message,to=[to_email])
 			email.send()
+@app.task
+def store_bill():
+	class HelloPDFView(PDFTemplateView):
+
+		for user in get_user_model().objects.all():
+			profile = user.userprofile
+			if profile.depart == datetime.today().date() :
+				template_name = 'feedback.html'
+				base_url = 'file://' + settings.STATIC_ROOT
+				download_filename = 'hello.pdf'

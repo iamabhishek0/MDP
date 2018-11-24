@@ -10,9 +10,32 @@ from django.http import HttpResponse
 from dateutil import parser
 from random import randint
 from forms.task import send_verification_email
+from easy_pdf.views import PDFTemplateView
+from django.conf import settings
+from weasyprint import HTML, CSS
+from django.template.loader import get_template
+from django.template import RequestContext
 def form_view(request):
 	return render(request,'room/book_a_room.html')
+def vipform(request):
+	return render(request,'room/vip_form.html')
 
+
+
+
+
+def bill_genrate(request):
+	html_template = get_template('bill.html')
+	a=settings.STATICFILES_DIRS
+	b=''.join(a)
+	user=User.objects.get(username='ala989')
+	profile = user.userprofile
+	booking = Booking.objects.get(user=user)
+	rendered_html = html_template.render(({'user': user,'profile':profile,'booking':booking,})).encode(encoding="UTF-8")
+	pdf_file = HTML(string=rendered_html,base_url=request.build_absolute_uri()).write_pdf(stylesheets=[CSS(b +'/css/bill.css')])
+	response = HttpResponse(pdf_file, content_type='application/pdf')
+	response['Content-Disposition'] = 'filename="home_page.pdf"'
+	return response
 def form_submit(request):
 	name=request.POST["name"]
 	email=request.POST["email"]
@@ -68,7 +91,7 @@ def form_submit(request):
 	profile.reference_name=reference_name
 	profile.reference_email=reference_email
 	profile.save()
-	
+
 	user.save()
 	send_verification_email.delay(user.username)
 

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'home',
     'forms',
     'members',
+    'easy_pdf',
 
 ]
 AUTH_PROFILE_MODULE = 'forms.UserProfile'
