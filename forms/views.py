@@ -15,6 +15,8 @@ from django.conf import settings
 from weasyprint import HTML, CSS
 from django.template.loader import get_template
 from django.template import RequestContext
+import json
+from django.http import JsonResponse
 def form_view(request):
 	return render(request,'room/book_a_room.html')
 def vipform(request):
@@ -22,6 +24,39 @@ def vipform(request):
 
 
 
+def lat_ajax(request):
+
+	if request.method == 'POST' and request.is_ajax():
+		name = request.POST.get('name')
+		arrive = parser.parse(request.POST["arrive"]).date()
+		depart = parser.parse(request.POST["depart"]).date()
+		found = 0
+		room_type = request.POST.get('room_type')
+		for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
+			f = 1
+			rID = r.roomID
+			for b in Booking.objects.raw('SELECT * FROM forms_booking WHERE roomID = %s', [rID]):
+
+				if(b.arrive > depart or b.depart < arrive):
+					pass
+				else:
+
+					f=0
+			if f == 1:
+				#User.objects.get(id = user.id).booking_set.add(booking)
+				found = 1
+				break
+			if found == 1:
+				break
+		if found == 0:
+			booked=False
+		else:
+			booked=True
+		data = {
+			'booked': booked,
+			'arrive': arrive
+		}
+		return JsonResponse(data)
 
 
 def bill_genrate(request):
@@ -52,7 +87,7 @@ def form_submit(request):
 	formsubmit.save()
 
 	user = User.objects.create_user(username=name+str(randint(0, 999)),email=email,password='arpitarpit',first_name=name)
-
+	# user = User.objects.create_user(username=name,email=email,password='arpitarpit',first_name=name)
 	found = 0
 	for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
 		f = 1

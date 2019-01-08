@@ -8,9 +8,47 @@
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 <link href="{% static 'css/css.css' %}"rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="{% static 'img/logo-image.png' %}">
+<script type = "text/javascript"
+         src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+      </script>
 
 
       <link rel="stylesheet" href="{% static 'css/form_css.css' %}">
+
+      <script>
+      $(document).ready(function() {
+              var name,arrive,depart,roomtype;
+              $("#check_avail").click(function(){
+                     name = $("#name").val();
+                     arrive= $("#arrive").val()
+                     depart = $("#depart").val()
+                     room_type=$("#room_type").val();
+
+                      $.ajax({
+                                url: "/bookroom/ajax/",
+                                type: "POST",
+                                data: {
+                                        'name': name,
+                                        'arrive': arrive.toString(),
+                                        'depart':depart.toString(),
+                                        'room_type':room_type,
+                                        'csrfmiddlewaretoken': '{{csrf_token}}'
+                                      },
+                                cache:false,
+                                dataType: "json",
+                                success: function(resp){
+                                  if(!resp.booked)
+                                    alert("Room not available on given date");
+                                  else {
+                                    alert("Room available");
+                                  }
+
+                                }
+                                });
+
+                  });
+    });
+      </script>
 
 
 </head>
@@ -105,13 +143,13 @@
     <div class="grid" >
     <div class="col-1-4 col-1-4-sm">
       <div class="controls">
-        <input type="date" id="arrive" class="floatLabel" name="arrive" value="<?php echo date('d-m-Y'); ?>">
+        <input type="date" id="arrive" class="floatLabel" name="arrive" value="">
         <label for="arrive" class="label-date"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Arrival </label>
       </div>
     </div>
     <div class="col-1-4 col-1-4-sm">
       <div class="controls">
-        <input type="date" id="depart" class="floatLabel" name="depart" value="<?php echo date('d-m-Y'); ?> " />
+        <input type="date" id="depart" class="floatLabel" name="depart" value=" " />
         <label for="depart" class="label-date"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Departure</label>
       </div>
     </div>
@@ -138,13 +176,16 @@
       <label for="fruit">Room Type</label>
      </div>
       </div>
+      <div class="col-1-3 col-1-3-sm">
+        <button type="button" value="button" class="col-1-4" allign="right" id="check_avail" >Check Availability</button>
+      </div>
 
   </div>   <div class="controls">
-    <input type="text" id="special_requirement" class="floatLabel" name="special_requirement" >
+    <input type="text" id="special_requirement" class="floatLabel" name="special_requirement"  >
     <label for="special_requirement">Special Requirement</label>
   </div><!-- /.form-group --><br><br>
 <div class="col-1-3 col-1-3-sm">
-  <button type="submit" value="Submit" class="col-1-4" allign="left">Submit</button>
+  <button type="submit" value="Submit" class="col-1-4" allign="left" >Submit</button>
 </div>
 <br><br>
 </form>
