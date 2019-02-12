@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Booking',
+            name='BookingTable',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('bookingID', models.CharField(blank=True, max_length=15, null=True)),
@@ -23,7 +23,6 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(blank=True, max_length=30, null=True)),
                 ('arrive', models.DateField(blank=True, null=True)),
                 ('depart', models.DateField(blank=True, null=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -41,36 +40,13 @@ class Migration(migrations.Migration):
                 ('reference_name', models.CharField(blank=True, max_length=30, null=True)),
                 ('reference_email', models.CharField(blank=True, max_length=30, null=True)),
                 ('room_type', models.CharField(blank=True, max_length=5, null=True)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Room',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('roomID', models.CharField(blank=True, max_length=15, null=True)),
-                ('room_type', models.CharField(blank=True, max_length=5, null=True)),
-                ('status', models.CharField(blank=True, max_length=15, null=True)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='UserProfile',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('reference_verified', models.BooleanField(default=False)),
                 ('director_verified', models.BooleanField(default=False)),
                 ('verified', models.BooleanField(default=False)),
                 ('booking_mail_sent', models.BooleanField(default=False)),
-                ('street', models.TextField(blank=True, max_length=300, null=True)),
-                ('city', models.CharField(blank=True, max_length=30, null=True)),
-                ('number', models.CharField(blank=True, max_length=30, null=True)),
-                ('pincode', models.CharField(blank=True, max_length=30, null=True)),
-                ('arrive', models.DateField(blank=True, null=True)),
-                ('depart', models.DateField(blank=True, null=True)),
-                ('reference_name', models.CharField(blank=True, max_length=30, null=True)),
-                ('reference_email', models.CharField(blank=True, max_length=30, null=True)),
-                ('is_member', models.BooleanField(default=False)),
-                ('applied_for_member', models.BooleanField(default=False)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('admin_verified', models.BooleanField(default=False)),
+                ('bookingtable', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='members.BookingTable')),
+                ('userbookings', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

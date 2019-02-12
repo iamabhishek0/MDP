@@ -7,13 +7,13 @@ urlpatterns = [
      url(r'^$', views.form_view, name='form_view'),
      url(r'^ajax/$', views.lat_ajax, name='lat_ajax'),
      path('formsubmit/',views.form_submit,name='form_submit'),
-     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/$',
         views.activate, name='activate'),
-     url(r'^director/activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+     url(r'^director/activate/(?P<uidb64>[0-9A-Za-z_\-]+)/$',
         views.director_activate, name='director_activate'),
-     url(r'^member/director/activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+     url(r'^member/director/activate/(?P<uidb64>[0-9A-Za-z_\-]+)/$',
            view.member_activate, name='member_activate'),
-     url(r'^cancel/director/activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+     url(r'^cancel/director/activate/(?P<uidb64>[0-9A-Za-z_\-]+)/$',
         views.cancel_booking ,name='cancel_booking'),
 
 

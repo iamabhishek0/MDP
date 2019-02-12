@@ -1,33 +1,100 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render,redirect
+from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.models import User
-from forms.models import FormSubmit , Room , Booking ,UserProfile
+from .models import FormSubmit,BookingTable
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from forms.tokens import account_activation_token
 from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login ,logout
+from forms.models import  Room , Booking ,UserProfile
+from django.contrib.auth.decorators import login_required
+from dateutil import parser
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from forms.task import send_verification_email
+@login_required
+def profile(request):
+	user=request.user
+	formsubmits=(FormSubmit.objects.filter(userbookings=user))
+	return render(request, 'profile.html',{'user':user,'formsubmits':formsubmits})
+@login_required
+def roombook(request):
+	return render(request,'room/book_a_room.html')
 
+@login_required
+def submit(request):
+	user=request.user
+	name = request.POST["name"]
+	email = request.POST["email"]
+	number = request.POST["phone"]
+	street = request.POST["street"]
+	city = request.POST["city"]
+	pincode = request.POST["post-code"]
+	arrive = parser.parse(request.POST["arrive"]).date()
+	depart = parser.parse(request.POST["depart"]).date()
+	room_type = request.POST["room_type"]
+	reference_name = request.POST["reference_name"]
+	reference_email = request.POST["reference_email"]
+	formsubmit = FormSubmit(userbookings=user,name=name, email=email, number=number, street=street, city=city, pincode=pincode,
+							arrive=arrive, depart=depart, reference_email=reference_email,
+							reference_name=reference_name)
+	formsubmit.save()
+	found = 0
+	for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
+		f = 1
+		rID = r.roomID
+		for b in BookingTable.objects.raw('SELECT * FROM forms_booking WHERE roomID = %s', [rID]):
 
-def login_member(request):
-	return render(request,'login_members.html')
-def login_(request):
+			if(b.arrive > depart or b.depart < arrive):
+				pass
+			else:
+
+				f=0
+		if f == 1:
+			booking = BookingTable.objects.create()
+			booking.bookingID=formsubmit.id
+			booking.roomID=rID
+			booking.name=name
+			booking.arrive=arrive
+			booking.depart=depart
+			booking.save()
+			formsubmit.bookingtable=booking
+			formsubmit.save()
+			#User.objects.get(id = user.id).booking_set.add(booking)
+			found = 1
+			break
+		if found == 1:
+			break
+	if found == 0:
+		return HttpResponse('Sorry no rooms available for requested dates')
+	send_verification_email.delay(formsubmit.id)
+		#room not available
+
+	return HttpResponseRedirect('/membership/profile')
+
+def loginregisterpage(request):
+	if request.user.is_authenticated :
+		return HttpResponseRedirect('/membership/profile')
+	else:
+		return render(request,'login_members.html')
+def loginuser(request):
 
 	username = request.POST.get('username')
 	password = request.POST.get('password')
 	user = authenticate(request, username=username, password=password)
-	profile = user.userprofile
-
-	if user is not  None and profile.is_member is True :
+	# if user is not  None and profile.is_member is True :
+	if user is not None:
 		login( request , user)
-		return HttpResponse('vy')
-
-		# Redirect to a success page.
-		...
+		return redirect('/membership/profile')
 	else:
 		return HttpResponse('Sorry you are not a member')
 		# Return an 'invalid login' error message.
+@login_required
+def logoutuser(request):
+	logout(request)
+	return redirect('/membership')
 
 def register(request):
 	name=request.POST["name"]
@@ -60,7 +127,7 @@ def register(request):
 	mail_subject = 'IIITM guest house'
 	message=render_to_string('director_mail.html',{'user': user,
 					'reference_name' : reference_name ,
-					'domain': '127.0.0.1:8000/director/member',
+					'domain': '127.0.0.1:8000',
 					'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
 					'token': account_activation_token.make_token(user),})
 	email=EmailMessage(mail_subject,message,to=['imarpit02@gmail.com'])
@@ -78,6 +145,64 @@ def member_activate(request, uidb64, token):
 		profile.is_member = True
 
 		profile.save()
+		return HttpResponse('Thank you for your confirmation')
+	else:
+		return HttpResponse('link is invalid! or You have already confirmed!!')
+def activate(request, uidb64):
+	try:
+		uid = force_text(urlsafe_base64_decode(uidb64))
+		formsubmit = FormSubmit.objects.get(pk=uid)
+	except(TypeError, ValueError, OverflowError, FormSubmit.DoesNotExist):
+		formsubmit = None
+	if formsubmit is not None :
+		formsubmit.reference_verified = True
+		if formsubmit.director_verified:
+			formsubmit.verified = True
+			if not formsubmit.booking_mail_sent:
+				mail_subject = 'IIITM guest house'
+				message=render_to_string('booking_mail.html',{'user': formsubmit,
+				'domain': '127.0.0.1:8000/membership/',
+				'uid': urlsafe_base64_encode(force_bytes(formsubmit.pk)).decode(),
+				# 'token': account_activation_token.make_token(user),
+				'arrive': formsubmit.arrive,
+				'depart' : formsubmit.depart
+				,})
+				to_email=formsubmit.email
+				formsubmit.booking_mail_sent= True
+				email=EmailMessage(mail_subject,message,to=[to_email])
+				email.send()
+
+		formsubmit.save()
+		return HttpResponse('Thank you for your confirmation')
+	else:
+		return HttpResponse('link is invalid! or You have already confirmed!!')
+def director_activate(request, uidb64):
+	try:
+		uid = force_text(urlsafe_base64_decode(uidb64))
+		formsubmit = FormSubmit.objects.get(pk=uid)
+	except(TypeError, ValueError, OverflowError, FormSubmit.DoesNotExist):
+		formsubmit = None
+	if formsubmit is not None :
+		booking = formsubmit.bookingtable
+		formsubmit.director_verified = True
+		if formsubmit.reference_verified:
+			formsubmit.verified = True
+			if not formsubmit.booking_mail_sent:
+				mail_subject = 'IIITM guest house'
+				message=render_to_string('booking_mail.html',{'user': formsubmit,
+				'arrive': formsubmit.arrive,
+				'uid': urlsafe_base64_encode(force_bytes(formsubmit.pk)).decode(),
+				# 'token': account_activation_token.make_token(user),
+				'depart' : formsubmit.depart,
+				'roomID' : booking.roomID,
+				'domain': '127.0.0.1:8000/director/cancel'
+				,})
+				to_email=formsubmit.email
+				formsubmit.booking_mail_sent= True
+				email=EmailMessage(mail_subject,message,to=[to_email])
+				email.send()
+
+		formsubmit.save()
 		return HttpResponse('Thank you for your confirmation')
 	else:
 		return HttpResponse('link is invalid! or You have already confirmed!!')
