@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import FormSubmit , Booking , Room,UserProfile
+from members.models import FormSubmit as FormSubmitmembers
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.admin import UserAdmin
 from  .models import UserProfile
@@ -28,10 +29,10 @@ class BookingEntry(admin.ModelAdmin):
 class UserProfileEntry(admin.ModelAdmin):
 	list_display = ("user", "verified", "booking_mail_sent", "arrive", "depart", "street", "city", "reference_email")
 
-admin.site.register(FormSubmit,AllEntryAdmin)
-admin.site.register(Room,RoomEntry)
-admin.site.register(Booking,BookingEntry)
-admin.site.register(UserProfile,UserProfileEntry)
+# admin.site.register(FormSubmit,AllEntryAdmin)
+# admin.site.register(Room,RoomEntry)
+# admin.site.register(Booking,BookingEntry)
+# admin.site.register(UserProfile,UserProfileEntry)
 
 class ProfileInline(admin.StackedInline):
 	model = UserProfile
@@ -43,9 +44,11 @@ class ProfileInline(admin.StackedInline):
 class BookinInLine(admin.StackedInline):
 	model = Booking
 	can_delete = False
-
+class FormSubmitmembersInLine(admin.StackedInline):
+	model = FormSubmitmembers
+	can_delete = False
 class UserProfileAdmin(UserAdmin):
-	inlines = [ ProfileInline, BookinInLine,]
+	inlines = [ ProfileInline,FormSubmitmembersInLine]
 	ordering = ('-id', )
 	fieldsets = (
 			(None, {'fields': ('first_name','email', 'password')}),

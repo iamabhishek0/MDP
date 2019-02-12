@@ -15,11 +15,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.mail import EmailMessage
 from members.models import FormSubmit
-
 class FormSubmitAdmin(admin.ModelAdmin):
 	ordering = ('-id', )
 	fieldsets = (
-			(None, {'fields': ('name','email','userbookings')}),
+			(None, {'fields': ('name','email','userbookings','reference_verified','director_verified','verified')}),
 	)
 
 	# def reference_verified(self, obj):
@@ -53,7 +52,7 @@ class FormSubmitAdmin(admin.ModelAdmin):
 			return obj.bookingtable.roomID
 		except BookingTable.DoesNotExist:
 			return ''
-	list_display =  ('name','id','email','reference_verified','director_verified','verified','room','account_actions',)
+	list_display =  ('name','userbookings','email','reference_verified','director_verified','verified','room','account_actions',)
 
 
 
@@ -111,4 +110,23 @@ class FormSubmitAdmin(admin.ModelAdmin):
 		msg.send()
 
 		return response
+class FormSubmitInline(admin.StackedInline):
+	model = FormSubmit
+	can_delete = False
+	fk_name = 'bookingtable'
+	ordering = ('-id',)
+class BookingTableAdmin(admin.ModelAdmin):
+	inlines=[FormSubmitInline]
+	fieldsets = (
+			(None, {'fields': ('roomID','name')}),
+	)
+	list_display =  ('roomID','arrive','depart','name')
+	def name(self, obj):
+		try:
+			return obj.formsubmit.name
+		except FormSubmit.DoesNotExist:
+			return ''
+
+
 admin.site.register(FormSubmit,FormSubmitAdmin)
+admin.site.register(BookingTable,BookingTableAdmin)

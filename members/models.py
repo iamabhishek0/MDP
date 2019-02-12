@@ -31,3 +31,5 @@ class FormSubmit(models.Model):
 	verified=models.BooleanField(default=False)
 	booking_mail_sent=models.BooleanField(default=False)
 	admin_verified=models.BooleanField(default=False)
+	def room(self):
+		return self.bookingtable.roomID

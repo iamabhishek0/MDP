@@ -125,7 +125,7 @@ def register(request):
 	profile.save()
 	user.save()
 	mail_subject = 'IIITM guest house'
-	message=render_to_string('director_mail.html',{'user': user,
+	message=render_to_string('membership_apply.html',{'user': user,
 					'reference_name' : reference_name ,
 					'domain': '127.0.0.1:8000',
 					'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
