@@ -32,7 +32,7 @@ class UserProfileEntry(admin.ModelAdmin):
 # admin.site.register(FormSubmit,AllEntryAdmin)
 # admin.site.register(Room,RoomEntry)
 # admin.site.register(Booking,BookingEntry)
-# admin.site.register(UserProfile,UserProfileEntry)
+admin.site.register(UserProfile,UserProfileEntry)
 
 class ProfileInline(admin.StackedInline):
 	model = UserProfile

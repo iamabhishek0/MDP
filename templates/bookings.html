@@ -75,7 +75,7 @@
     {% for item in formsubmits %}
     <!--<h3>{{ i.id }} {{ i.name}} from {{i.arrive}} to {{i.depart}} room no. {{i.bookingtable.roomID}} </h3>-->
     <tr>
-      <td>{{ item.id }}</td>
+      <td>{{ forloop.counter }}</td>
       <td>{{ item.name }}</td>
       <td>{{ item.arrive }}</td>
       <td>{{ item.depart }}</td>
