@@ -30,7 +30,7 @@ class UserProfileEntry(admin.ModelAdmin):
 	list_display = ("user", "verified", "booking_mail_sent", "arrive", "depart", "street", "city", "reference_email")
 
 # admin.site.register(FormSubmit,AllEntryAdmin)
-# admin.site.register(Room,RoomEntry)
+admin.site.register(Room,RoomEntry)
 # admin.site.register(Booking,BookingEntry)
 admin.site.register(UserProfile,UserProfileEntry)
 

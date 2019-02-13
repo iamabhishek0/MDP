@@ -32,7 +32,7 @@ def lat_ajax(request):
 		for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
 			f = 1
 			rID = r.roomID
-			for b in Booking.objects.raw('SELECT * FROM forms_booking WHERE roomID = %s', [rID]):
+			for b in Booking.objects.raw('SELECT * FROM members_bookingtable WHERE roomID = %s', [rID]):
 
 				if(b.arrive > depart or b.depart < arrive):
 					pass
@@ -68,6 +68,8 @@ def lat_ajax(request):
 # 	response = HttpResponse(pdf_file, content_type='application/pdf')
 # 	response['Content-Disposition'] = 'filename="home_page.pdf"'
 # 	return response
+
+
 def form_submit(request):
 	name=request.POST["name"]
 	email=request.POST["email"]
@@ -89,7 +91,7 @@ def form_submit(request):
 	for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
 		f = 1
 		rID = r.roomID
-		for b in Booking.objects.raw('SELECT * FROM forms_booking WHERE roomID = %s', [rID]):
+		for b in Booking.objects.raw('SELECT * FROM members_bookingtable WHERE roomID = %s', [rID]):
 
 			if(b.arrive > depart or b.depart < arrive):
 				pass

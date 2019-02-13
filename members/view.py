@@ -50,7 +50,7 @@ def submit(request):
 	for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
 		f = 1
 		rID = r.roomID
-		for b in BookingTable.objects.raw('SELECT * FROM forms_booking WHERE roomID = %s', [rID]):
+		for b in BookingTable.objects.raw('SELECT * FROM members_bookingtable WHERE roomID = %s', [rID]):
 
 			if(b.arrive > depart or b.depart < arrive):
 				pass
@@ -77,11 +77,11 @@ def submit(request):
 	send_verification_email.delay(formsubmit.id)
 		#room not available
 
-	return HttpResponseRedirect('/membership/profile')
+	return HttpResponseRedirect('/')
 
 def loginregisterpage(request):
 	if request.user.is_authenticated :
-		return HttpResponseRedirect('/membership/profile')
+		return HttpResponseRedirect('/')
 	else:
 		return render(request,'login_members.html')
 def loginuser(request):
@@ -92,7 +92,7 @@ def loginuser(request):
 	# if user is not  None and profile.is_member is True :
 	if user is not None:
 		login( request , user)
-		return redirect('/membership/profile')
+		return redirect('/')
 	else:
 		return HttpResponse('Sorry you are not a member')
 		# Return an 'invalid login' error message.
