@@ -18,6 +18,11 @@ from forms.task import send_verification_email
 def profile(request):
 	user=request.user
 	formsubmits=(FormSubmit.objects.filter(userbookings=user))
+	return render(request, 'room/index.html',{'user':user,'formsubmits':formsubmits})
+@login_required
+def bookings(request):
+	user=request.user
+	formsubmits=(FormSubmit.objects.filter(userbookings=user))
 	return render(request, 'bookings.html',{'user':user,'formsubmits':formsubmits})
 @login_required
 def roombook(request):
