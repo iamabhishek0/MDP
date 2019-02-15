@@ -3,6 +3,18 @@
   height: 70px;
   background: #262626;
 }
+.back {
+ position: relative;
+  left: -300px;
+  background: transparent;
+  padding-top: 13px;
+  padding-left: 0px;
+  float: left;
+  line-height: 10px;
+  text-transform: uppercase;
+  align-items: left;
+  font-size: 1.4em;
+}
 
 .brand {
   position: absolute;

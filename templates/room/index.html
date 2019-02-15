@@ -504,7 +504,12 @@
 							Rooms are fitted with refrigerators, microwave ovens, and hotplate.  If required you could prepare your own food.<br><br><strong>Expense: 2000/-</strong>
 
 						</p><br>
-						<a href="/bookroom/"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+						{% if user.username != "" %}
+						<a href="/membership/roombooking/"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+						{% else %}
+						<a href="/membership/"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+						{% endif %}
+
 					</div>
 				</div>
 			</div><br><br>
@@ -517,7 +522,11 @@
 Single Occupancy : 750/-<br>
 Double Occupancy : 1250/-</strong>
 						</p><br>
-				<a href="/bookroom/"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+							{% if user.username != "" %}
+						<a href="/membership/roombooking/"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+						{% else %}
+						<a href="/membership/"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+						{% endif %}
 					</div>
 				</div><br>
 
@@ -573,8 +582,11 @@ Single Occupancy : 500/-<br>
 Double Occupancy : 750/-</strong>
 
 						</p><br>
-
-			<a href="/bookroom/"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+						{% if user.username != "" %}
+						<a href="/membership/roombooking/"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+						{% else %}
+						<a href="/membership/"><strong><button type="button" class="btn btn-info">BOOK NOW</button></strong></a>
+						{% endif %}
 					</div>
 				</div>
 <!--

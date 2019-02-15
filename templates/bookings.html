@@ -10,27 +10,71 @@
 
       <link rel="stylesheet" href="{% static 'css/profile.css' %}">
   <style>
-#bookings {
-  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(0deg, #49a09d, #5f2c82);
+  font-family: sans-serif;
+  font-weight: 100;
+
+}
+
+.container {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+table {
+  width: 1500px;
   border-collapse: collapse;
-  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
-#bookings td, #bookings th {
-  border: 1px solid #ddd;
-  padding: 8px;
+th,
+td {
+  padding: 15px;
+  background-color: rgba(255,255,255,0.2);
+  color: #fff;
 }
 
-#bookings tr:nth-child(even){background-color: #f2f2f2;}
-
-#bookings tr:hover {background-color: #ddd;}
-
-#bookings th {
-  padding-top: 12px;
-  padding-bottom: 12px;
+th {
   text-align: left;
-  background-color: #4CAF50;
-  color: white;
+}
+
+thead {
+  th {
+    background-color: #55608f;
+  }
+}
+
+tbody {
+  tr {
+    &:hover {
+      background-color: rgba(255,255,255,0.3);
+    }
+  }
+  td {
+    position: relative;
+    &:hover {
+      &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -9999px;
+        bottom: -9999px;
+        background-color: rgba(255,255,255,0.2);
+        z-index: -1;
+      }
+    }
+  }
 }
 </style>
 </head>
@@ -39,12 +83,19 @@
 
   <section class="navigation">
   <div class="nav-container">
+   <!--  <div class="back">
+      <a href="#">Hi {{user.username}}!</a>
+    </div> --> 
+    <div class="back">
+      <a href="/"><img src="{% static 'img/back.png' %}"  height="42" width="42" alt="" /></a>
+    </div>
     <div class="brand">
       <a href="#">Hi {{user.username}}!</a>
     </div>
     <nav>
       <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
       <ul class="nav-list">
+        
         <li>
           <a href="/">Home</a>
         </li>
@@ -58,18 +109,20 @@
     </nav>
   </div>
     </section>
-  <h1 align="center">Your Bookings</h1>
-  <div style="overflow-x:auto;">
-    <table id="bookings">
-    <tr>
-      <th>S No.</th>
-      <th>Name</th>
-      <th>Arrival</th>
-      <th>Departure</th>
-      <th>Room No.</th>
-        <!--<th>Field N</th>-->
-    </tr>
-    {% for item in formsubmits %}
+  <h1 align="center"><font face="sans-serif" size="10" color="white">Your Bookings</font></h1>
+ <div class="container">
+  <table>
+    <thead>
+      <tr>
+        <th>S. No.</th>
+        <th>Name</th>
+        <th>Arrival</th>
+        <th>Departure</th>
+        <th>Room No.</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for item in formsubmits %}
     <!--<h3>{{ i.id }} {{ i.name}} from {{i.arrive}} to {{i.depart}} room no. {{i.bookingtable.roomID}} </h3>-->
     <tr>
       <td>{{ forloop.counter }}</td>
@@ -79,8 +132,10 @@
       <td>{{ item.bookingtable.roomID }}</td>
     </tr>
     {% endfor %}
-</table>
-  </div>
+      
+    </tbody>
+  </table>
+</div>
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script  src="{% static 'js/profile.js' %}"></script>
 </body>
