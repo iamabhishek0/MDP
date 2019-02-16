@@ -52,7 +52,7 @@ class FormSubmitAdmin(admin.ModelAdmin):
 			return obj.bookingtable.roomID
 		except BookingTable.DoesNotExist:
 			return ''
-	list_display =  ('name','userbookings','email','reference_verified','director_verified','verified','room','account_actions',)
+	list_display =  ('id','name','userbookings','email','reference_verified','director_verified','verified','room','account_actions',)
 
 
 
@@ -87,7 +87,8 @@ class FormSubmitAdmin(admin.ModelAdmin):
 		b=''.join(a)
 		formsubmit=FormSubmit.objects.get(pk=account_id)
 		booking = formsubmit.bookingtable
-		rendered_html = html_template.render(({'formsubmit':formsubmit,'booking':booking,})).encode(encoding="UTF-8")
+		room = Room.objects.get(roomID=booking.roomID)
+		rendered_html = html_template.render(({'formsubmit':formsubmit,'booking':booking,'room':room,})).encode(encoding="UTF-8")
 		pdf_file = HTML(string=rendered_html,base_url=request.build_absolute_uri()).write_pdf(stylesheets=[CSS(b +'/css/bill.css')])
 		response = HttpResponse(pdf_file, content_type='application/pdf')
 		response['Content-Disposition'] = 'filename="home_page.pdf"'
@@ -120,7 +121,7 @@ class BookingTableAdmin(admin.ModelAdmin):
 	fieldsets = (
 			(None, {'fields': ('roomID','name')}),
 	)
-	list_display =  ('roomID','arrive','depart','name')
+	list_display =  ('id','roomID','arrive','depart','name')
 	def name(self, obj):
 		try:
 			return obj.formsubmit.name
