@@ -23,13 +23,6 @@ body {
 
 }
 
-.container {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 table {
   width: 1500px;
   border-collapse: collapse;
@@ -109,8 +102,8 @@ tbody {
     </nav>
   </div>
     </section>
-  <h1 align="center"><font face="sans-serif" size="10" color="white">Your Bookings</font></h1>
- <div class="container">
+  <h1 align="center"><font face="sans-serif" size="10" color="white">Your Bookings</font></h1><br>
+ <div class="container" align="center">
   <table>
     <thead>
       <tr>
@@ -119,6 +112,8 @@ tbody {
         <th>Arrival</th>
         <th>Departure</th>
         <th>Room No.</th>
+        <th>Status</th>
+        <th>Bill</th>
       </tr>
     </thead>
     <tbody>
@@ -130,6 +125,13 @@ tbody {
       <td>{{ item.arrive }}</td>
       <td>{{ item.depart }}</td>
       <td>{{ item.bookingtable.roomID }}</td>
+      {% if item.verified == True %}
+      <!--<td>{{ item.verified }}</td>-->
+      <td>Confirm</td>
+      {% else %}
+      <td>Pending</td>
+      {% endif %}
+      <td><a href="/admin/members/formsubmit/6/deposit/">Generate</a></td>
     </tr>
     {% endfor %}
       

@@ -14,16 +14,24 @@ from dateutil import parser
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from forms.task import send_verification_email
+from django import template
+register = template.Library()
+@register.filter
+def add(value_1, value_2):
+    return str(value_1) + str(value_2)
+
 @login_required
 def profile(request):
 	user=request.user
 	formsubmits=(FormSubmit.objects.filter(userbookings=user))
 	return render(request, 'room/index.html',{'user':user,'formsubmits':formsubmits})
+
 @login_required
 def bookings(request):
 	user=request.user
 	formsubmits=(FormSubmit.objects.filter(userbookings=user))
 	return render(request, 'bookings.html',{'user':user,'formsubmits':formsubmits})
+
 @login_required
 def roombook(request):
 	return render(request,'room/book_a_room.html')
