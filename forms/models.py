@@ -20,7 +20,7 @@ class FormSubmit(models.Model):
 	
 class FeedbackSubmit(models.Model):
 	"""docstring for FeedbackSubmit"""
-	name=models.CharField(max_length=30)
+	name=models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 	subject=models.CharField(max_length=30)
 	message=models.TextField(max_length=1000)
 

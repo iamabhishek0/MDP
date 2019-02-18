@@ -28,11 +28,13 @@ class BookingEntry(admin.ModelAdmin):
 	list_display = ( "bookingID", "user", "roomID", "name", "arrive", "depart")
 class UserProfileEntry(admin.ModelAdmin):
 	list_display = ("user", "verified", "booking_mail_sent", "arrive", "depart", "street", "city", "reference_email")
+class FeedBackEntry(admin.ModelAdmin):
+    list_display = ("name","subject","message")
 
 # admin.site.register(FormSubmit,AllEntryAdmin)
 admin.site.register(Room,RoomEntry)
 # admin.site.register(Booking,BookingEntry)
-admin.site.register(FeedbackSubmit)
+admin.site.register(FeedbackSubmit,FeedBackEntry)
 admin.site.register(UserProfile,UserProfileEntry)
 
 class ProfileInline(admin.StackedInline):

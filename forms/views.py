@@ -69,20 +69,18 @@ def lat_ajax(request):
 # 	response = HttpResponse(pdf_file, content_type='application/pdf')
 # 	response['Content-Disposition'] = 'filename="home_page.pdf"'
 # 	return response
+
 @login_required
 def feedback_submit(request):
 	user=request.user
-	name=user.username
 	subject=request.POST["subject"]
 	message=request.POST["message"]
-	feedbacksubmit=FeedbackSubmit(name=name,subject=subject,message=message)
+	feedbacksubmit=FeedbackSubmit(name=user, subject=subject, message=message)
 	feedbacksubmit.save()
 	return render(request,"room/feedbacksubmitted.html")
+
 def feedback_form(request):
 	return render(request,"room/feedbackform.html")
-
-
-
 
 def form_submit(request):
 	name=request.POST["name"]
