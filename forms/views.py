@@ -33,7 +33,7 @@ def lat_ajax(request):
 		for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
 			f = 1
 			rID = r.roomID
-			for b in Booking.objects.raw('SELECT * FROM members_bookingtable WHERE roomID = %s', [rID]):
+			for b in Booking.objects.raw('SELECT * FROM members_bookingtable WHERE roomID_id = %s', [rID]):
 
 				if(b.arrive > depart or b.depart < arrive):
 					pass
@@ -105,7 +105,7 @@ def form_submit(request):
 	for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
 		f = 1
 		rID = r.roomID
-		for b in Booking.objects.raw('SELECT * FROM members_bookingtable WHERE roomID = %s', [rID]):
+		for b in Booking.objects.raw('SELECT * FROM members_bookingtable WHERE roomID_id = %s', [rID]):
 
 			if(b.arrive > depart or b.depart < arrive):
 				pass
@@ -115,7 +115,7 @@ def form_submit(request):
 		if f == 1:
 			booking = Booking.objects.get(user=user)
 			booking.bookingID=formsubmit.id
-			booking.roomID=rID
+			booking.roomID_id=rID
 			booking.name=name
 			booking.arrive=arrive
 			booking.depart=depart
@@ -191,7 +191,7 @@ def director_activate(request, uidb64,token):
 				'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
 				'token': account_activation_token.make_token(user),
 				'depart' : profile.depart,
-				'roomID' : booking.roomID,
+				'roomID' : booking.roomID_id,
 				'domain': '127.0.0.1:8000/director/cancel'
 
 				,})

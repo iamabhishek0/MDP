@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.models import User
-from .models import FormSubmit,BookingTable
+from .models import FormSubmit, BookingTable
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -30,6 +30,7 @@ def profile(request):
 def bookings(request):
 	user=request.user
 	formsubmits=(FormSubmit.objects.filter(userbookings=user))
+	# userbookings=
 	return render(request, 'bookings.html',{'user':user,'formsubmits':formsubmits})
 
 @login_required
@@ -41,24 +42,30 @@ def submit(request):
 	user=request.user
 	name = request.POST["name"]
 	email = request.POST["email"]
-	number = request.POST["phone"]
+	age = request.POST["age"]
 	street = request.POST["street"]
 	city = request.POST["city"]
+	number = request.POST["phone"]
 	pincode = request.POST["post-code"]
 	arrive = parser.parse(request.POST["arrive"]).date()
 	depart = parser.parse(request.POST["depart"]).date()
-	room_type = request.POST["room_type"]
 	reference_name = request.POST["reference_name"]
 	reference_email = request.POST["reference_email"]
-	formsubmit = FormSubmit(userbookings=user,name=name, email=email, number=number, street=street, city=city, pincode=pincode,
-							arrive=arrive, depart=depart, reference_email=reference_email,
-							reference_name=reference_name)
+	reference_designation = request.POST["reference_designation"]
+	room_type = request.POST["room_type"]
+	no_of_rooms = request.POST["no_of_rooms"]
+	adults = request.POST["adults"]
+	childs = request.POST["childs"]
+	formsubmit = FormSubmit(userbookings=user,name=name, email=email, age=age, number=number, street=street, city=city,
+							pincode=pincode, arrive=arrive, depart=depart, reference_email=reference_email,
+							reference_name=reference_name, reference_designation=reference_designation,
+							room_type=room_type, no_of_rooms=no_of_rooms, adults=adults, childs=childs)
 	formsubmit.save()
 	found = 0
 	for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
 		f = 1
 		rID = r.roomID
-		for b in BookingTable.objects.raw('SELECT * FROM members_bookingtable WHERE roomID = %s', [rID]):
+		for b in BookingTable.objects.raw('SELECT * FROM members_bookingtable WHERE roomID_id = %s', [rID]):
 
 			if(b.arrive > depart or b.depart < arrive):
 				pass
@@ -66,15 +73,8 @@ def submit(request):
 
 				f=0
 		if f == 1:
-			booking = BookingTable.objects.create()
-			booking.bookingID=formsubmit.id
-			booking.roomID=rID
-			booking.name=name
-			booking.arrive=arrive
-			booking.depart=depart
+			booking = BookingTable.objects.create(roomID_id=r, bookingID=formsubmit, arrive=arrive, name=name, depart=depart)
 			booking.save()
-			formsubmit.bookingtable=booking
-			formsubmit.save()
 			#User.objects.get(id = user.id).booking_set.add(booking)
 			found = 1
 			break
@@ -124,7 +124,6 @@ def register(request):
 
 	if User.objects.filter(username=username).exists():
 		return HttpResponse('Username not available')
-
 
 	user = User.objects.create_user(username=username,email=email,password=password,first_name=name)
 	profile = user.userprofile
@@ -196,7 +195,6 @@ def director_activate(request, uidb64):
 	except(TypeError, ValueError, OverflowError, FormSubmit.DoesNotExist):
 		formsubmit = None
 	if formsubmit is not None :
-		booking = formsubmit.bookingtable
 		formsubmit.director_verified = True
 		if formsubmit.reference_verified:
 			formsubmit.verified = True
@@ -207,7 +205,7 @@ def director_activate(request, uidb64):
 				'uid': urlsafe_base64_encode(force_bytes(formsubmit.pk)).decode(),
 				# 'token': account_activation_token.make_token(user),
 				'depart' : formsubmit.depart,
-				'roomID' : booking.roomID,
+				'roomID' : booking.roomID_id,
 				'domain': '127.0.0.1:8000/director/cancel'
 				,})
 				to_email=formsubmit.email

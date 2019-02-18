@@ -118,20 +118,19 @@ tbody {
     </thead>
     <tbody>
         {% for item in formsubmits %}
-    <!--<h3>{{ i.id }} {{ i.name}} from {{i.arrive}} to {{i.depart}} room no. {{i.bookingtable.roomID}} </h3>-->
     <tr>
       <td>{{ forloop.counter }}</td>
       <td>{{ item.name }}</td>
       <td>{{ item.arrive }}</td>
       <td>{{ item.depart }}</td>
-      <td>{{ item.bookingtable.roomID }}</td>
+      <td>{{ "do something" }}</td>
       {% if item.verified == True %}
       <!--<td>{{ item.verified }}</td>-->
       <td>Confirm</td>
       {% else %}
       <td>Pending</td>
       {% endif %}
-      <td><a href="/admin/members/formsubmit/6/deposit/">Generate</a></td>
+      <td><a href="/admin/members/formsubmit/{{item.id}}/deposit/">Generate</a></td>
     </tr>
     {% endfor %}
       

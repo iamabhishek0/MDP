@@ -260,28 +260,28 @@
                   </div>
                   <div class="col-sm-4">
                     <div class="form-group">
-                      <span class="form-label">Check out</span>
+                      <span class="form-label">Check Out</span>
                       <input class="form-control" type="date" id="depart" name="depart" required>
                     </div>
                   </div>
 
                 </div>
+                <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
                     <span class="form-label">Room Type</span>
                       <select class="form-control" id="room_type" name="room_type" required>
-                        <option>ac</option>
-                        <option>vip</option>
+                        <option>AC</option>
+                        <option>VIP</option>
                       
                       </select>
                       <span class="select-arrow"></span>  
                     </div>
                 </div>
-                <div class="row">
                   <div class="col-sm-4">
                     <div class="form-group">
                       <span class="form-label">Rooms</span>
-                      <select class="form-control">
+                      <select class="form-control" id="no_of_rooms" name="no_of_rooms" required>
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -289,12 +289,17 @@
                       <span class="select-arrow"></span>
                     </div>
                   </div>
+                </div>
+
+                <div class="row">
                   <div class="col-sm-4">
                     <div class="form-group">
                       <span class="form-label">Adults</span>
-                      <select class="form-control">
+                      <select class="form-control" id="adults" name="adults" required>
                         <option>1</option>
                         <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
                       </select>
                       <span class="select-arrow"></span>
                     </div>
@@ -302,10 +307,11 @@
                   <div class="col-sm-4">
                     <div class="form-group">
                       <span class="form-label">Children</span>
-                      <select class="form-control">
+                      <select class="form-control" id="childs" name="childs" required>
                         <option>0</option>
                         <option>1</option>
                         <option>2</option>
+                        <option>3</option>
                       </select>
                       <span class="select-arrow"></span>
                     </div>
@@ -341,7 +347,7 @@
                 </div>
                  <div class="form-group">
                   <span class="form-label">Age</span>
-                  <input id="street-number" class="form-control" type="number" placeholder="Enter Your Age" name="street-number" required>
+                  <input id="street-number" class="form-control" type="number" placeholder="Enter Your Age" name="age" required>
                 </div>
                 <div class="form-group">
                   <span class="form-label">City</span>
@@ -365,7 +371,7 @@
                 </div>
                 <div class="form-group">
                       <span class="form-label">Designation</span>
-                      <select class="form-control">
+                      <select class="form-control" id="reference_designation" name="reference_designation" required>
                         <option>Faculty</option>
                         <option>Student</option>
                         <option>Employee</option>

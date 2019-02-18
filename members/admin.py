@@ -14,12 +14,11 @@ from django.template import RequestContext
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.mail import EmailMessage
-from members.models import FormSubmit
 class FormSubmitAdmin(admin.ModelAdmin):
 	ordering = ('-id', )
-	fieldsets = (
-			(None, {'fields': ('name','email','userbookings','reference_verified','director_verified','verified')}),
-	)
+	# fieldsets = (
+	# 		(None, {'fields': ('name','email','no_of_rooms','adults','childs','userbookings','reference_verified','director_verified','verified')}),
+	# )
 
 	# def reference_verified(self, obj):
 	# 	try:
@@ -49,10 +48,10 @@ class FormSubmitAdmin(admin.ModelAdmin):
 
 	def room(self, obj):
 		try:
-			return obj.bookingtable.roomID
+			return BookingTable.objects.get(bookingID=obj).roomID
 		except BookingTable.DoesNotExist:
 			return ''
-	list_display =  ('id','name','userbookings','email','reference_verified','director_verified','verified','room','account_actions',)
+	list_display =  ('id','name','userbookings','email','no_of_rooms','adults','childs','arrive','depart','reference_verified','director_verified','verified','room','account_actions',)
 
 
 
@@ -86,7 +85,7 @@ class FormSubmitAdmin(admin.ModelAdmin):
 		a=settings.STATICFILES_DIRS
 		b=''.join(a)
 		formsubmit=FormSubmit.objects.get(pk=account_id)
-		booking = formsubmit.bookingtable
+		booking = BookingTable.objects.get(bookingID=formsubmit)
 		room = Room.objects.get(roomID=booking.roomID)
 		rendered_html = html_template.render(({'formsubmit':formsubmit,'booking':booking,'room':room,})).encode(encoding="UTF-8")
 		pdf_file = HTML(string=rendered_html,base_url=request.build_absolute_uri()).write_pdf(stylesheets=[CSS(b +'/css/bill.css')])
@@ -111,17 +110,19 @@ class FormSubmitAdmin(admin.ModelAdmin):
 		msg.send()
 
 		return response
-class FormSubmitInline(admin.StackedInline):
-	model = FormSubmit
-	can_delete = False
-	fk_name = 'bookingtable'
-	ordering = ('-id',)
+#
+# class FormSubmitInline(admin.StackedInline):
+# 	model = FormSubmit
+# 	can_delete = False
+# 	fk_name = 'bookingtable'
+# 	ordering = ('-id',)
+
 class BookingTableAdmin(admin.ModelAdmin):
-	inlines=[FormSubmitInline]
-	fieldsets = (
-			(None, {'fields': ('roomID','name')}),
-	)
-	list_display =  ('id','roomID','arrive','depart','name')
+	# inlines=[FormSubmitInline]
+	# fieldsets = (
+	# 		(None, {'fields': ('roomID','name')}),
+	# )
+	list_display =  ('id','bookingID','name','roomID','arrive','depart')
 	def name(self, obj):
 		try:
 			return obj.formsubmit.name
