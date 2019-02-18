@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import FormSubmit, Room , Booking ,UserProfile
+from .models import FormSubmit, Room , Booking ,UserProfile , FeedbackSubmit
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
@@ -17,6 +17,7 @@ from django.template.loader import get_template
 from django.template import RequestContext
 import json
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 def form_view(request):
 	return render(request,'room/book_a_room.html')
 def vipform(request):
@@ -68,6 +69,19 @@ def lat_ajax(request):
 # 	response = HttpResponse(pdf_file, content_type='application/pdf')
 # 	response['Content-Disposition'] = 'filename="home_page.pdf"'
 # 	return response
+@login_required
+def feedback_submit(request):
+	user=request.user
+	name=user.username
+	subject=request.POST["subject"]
+	message=request.POST["message"]
+	feedbacksubmit=FeedbackSubmit(name=name,subject=subject,message=message)
+	feedbacksubmit.save()
+	return render(request,"room/feedbacksubmitted.html")
+def feedback_form(request):
+	return render(request,"room/feedbackform.html")
+
+
 
 
 def form_submit(request):

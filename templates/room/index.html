@@ -311,9 +311,10 @@
 </div></li> -->
 
 						<!--	<li><a title="blog" href="#blog">Blog</a></li>	-->
-							<li><a title="contact" href="#contact">Contact</a></li>
+							
 							<li><a title="Admin login" href="/admin/">Admin Login </a></li>
 							{% if user.username != "" %}
+							<li><a title="contact" href="/feedbackform">Feedback</a></li>
 							<li><a title="Members" href="/membership/bookings">Bookings </a></li>
 							<li><a href="/membership/logout">Logout</a></li>
 							{% else %}
@@ -1138,7 +1139,7 @@ Double Occupancy : 750/-</strong>
 	<!-- collarge -->
 	<section id="contact" class="section green">
 		<div class="container">
-			<h4>Get in Touch</h4>
+			<h4>Give Your Feedback</h4>
 			<p>
 				In case of any kind of inconvenience or for your valuable feedback please leave your message.
 			</p>
@@ -1149,17 +1150,18 @@ Double Occupancy : 750/-</strong>
 					<div class="cform" id="contact-form">
 						<div id="sendmessage">Your message has been sent. Thank you!</div>
 						<div id="errormessage"></div>
-						<form action="" method="post" role="form" class="contactForm">
+						<form action="/feedbacksubmit/" method="post" id="feedback_form" role="form" class="contactForm">
+							{% csrf_token %}
 							<div class="row">
 								<div class="span6">
-									<div class="field your-name form-group">
+									<!-- <div class="field your-name form-group">
 										<input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
 										<div class="validation"></div>
-									</div>
-									<div class="field your-email form-group">
+									</div> -->
+									<!-- <div class="field your-email form-group">
 										<input type="text" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
 										<div class="validation"></div>
-									</div>
+									</div> -->
 									<div class="field subject form-group">
 										<input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
 										<div class="validation"></div>
@@ -1170,7 +1172,7 @@ Double Occupancy : 750/-</strong>
 										<textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
 										<div class="validation"></div>
 									</div>
-									<input type="submit" value="Send message" class="btn btn-theme pull-left">
+      								<button type="button"  onclick="submit()" class="submit-btn">S</button>
 								</div>
 							</div>
 						</form>
@@ -1252,6 +1254,18 @@ Double Occupancy : 750/-</strong>
     });
   }); // end DOM ready
 })(jQuery); // end jQuery
+	    </script>
+	    <script type="text/javascript">
+	    	function submit() {
+  // This function will figure out which tab to displa
+  // if you have reached the end of the form...
+  
+    // ... the form gets submitted:
+
+    document.getElementById("feedback_form").submit();
+  
+ 
+}
 	    </script>
 
 </body>

@@ -28,5 +28,8 @@ urlpatterns = [
      path('membership/',include('members.url')),
      # path('bill/',views.bill_genrate,name='bill_genrate'),
      path('vipform/',views.vipform,name="vipform"),
+     path('feedbackform/feedbacksubmit/',views.feedback_submit,name='feedback_submit'),
+     path('feedbackform/',views.feedback_form,name='feedback_form'),
+
 
 ]

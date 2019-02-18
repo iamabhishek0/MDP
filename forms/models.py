@@ -17,7 +17,14 @@ class FormSubmit(models.Model):
 	reference_name=models.CharField(max_length=30,blank=True,null=True)
 	reference_email=models.CharField(max_length=30,blank=True,null=True)
 	room_type = models.CharField(max_length = 5,blank=True,null=True)
-
+	
+class FeedbackSubmit(models.Model):
+	"""docstring for FeedbackSubmit"""
+	name=models.CharField(max_length=30)
+	subject=models.CharField(max_length=30)
+	message=models.TextField(max_length=1000)
+	
+		
 class Booking(models.Model):
 	user = models.ForeignKey(User,on_delete=models.CASCADE)
 	bookingID = models.CharField(max_length = 15,blank=True,null=True)

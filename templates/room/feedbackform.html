@@ -25,7 +25,7 @@
          src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
       </script>
 
-
+<!-- 
       <script>
       $(document).ready(function() {
               var name,arrive,depart,roomtype;
@@ -57,7 +57,7 @@
                                 });
                   });
     });
-      </script>
+      </script> -->
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -206,8 +206,7 @@
 </head>
 
 <body>
-
-  <section class="navigation">
+ <section class="navigation">
   <div class="nav-container">
    <!--  <div class="back">
       <a href="#">Hi {{user.username}}!</a>
@@ -242,15 +241,25 @@
           <div class="col-md-12 col-md-push-3">
             <div class="booking-cta">
             <h1 style="color:#091D48">
-            Room Booking Section 
+            GIVE YOUR FEEDBACK 
               </h1>
             </div>
           </div>
           <div class="col-md-15 col-md-pull-3">
             <div class="booking-form">
-              <form action="formsubmit/" method="Post" id="regForm">
+              <form action="feedbacksubmit/" method="Post" id="feedbackform">
                  {% csrf_token %}
-                 <div class="tab">
+                 <div class="form-group">
+                  <span class="form-label">Subject</span>
+                  <input id="subject" class="form-control" type="text" placeholder="Enter Subject" name="subject" required>
+                </div>
+                <div class="form-group">
+                  <span class="form-label">Feedback</span>
+                  <input id="message" class="form-control" type="text" placeholder="Feedback" name="message" required>
+                </div>
+                  <button type="button" id="prevBtn" onclick="submit()" class="submit-btn">Submit</button>
+
+                 <!-- <div  class="tab">
                 <div class="row">
                   <div class="col-sm-4">
                     <div class="form-group">
@@ -373,23 +382,23 @@
                       <span class="select-arrow"></span>
                     </div>
                 
-                </div>
-                  <div style="overflow:auto;">
+                </div> --> -->
+                  <!-- <div style="overflow:auto;">
                   <div class="form-btn">
                   <div style="float:right;">
       <button type="button" id="prevBtn" onclick="nextPrev(-1)" class="submit-btn">Previous</button>
       <button type="button" id="nextBtn" onclick="nextPrev(1)" class="submit-btn">Next</button>
     </div>
-                  <!-- <button class="submit-btn">Check availability</button> -->
-                </div>
+ -->                  <!-- <button class="submit-btn">Check availability</button> -->
+                <!-- </div> -->
     
-  </div>
+  <!-- </div> -->
   <!-- Circles which indicates the steps of the form: -->
-  <div style="text-align:center;margin-top:40px;">
+<!--   <div style="text-align:center;margin-top:40px;">
     <span class="step"></span>
     <span class="step"></span>
     <span class="step"></span>
-  </div>
+  </div> -->
 
         </form>
         </div>        
@@ -398,7 +407,12 @@
         </div>
         </div>
         </div>
-  
+        <script type="text/javascript">
+          function submit() {
+              document.getElementById("feedbackform").submit();
+          }
+        </script>
+  <!-- 
     <script>
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the crurrent tab
@@ -474,14 +488,15 @@ function fixStepIndicator(n) {
   //... and adds the "active" class on the current step:
   x[n].className += " active";
 }
-</script>
+</script> -->
 
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://cdnjs.cloudflare.com/andiio/selectToAutocomplete/master/jquery-ui-autocomplete.js'></script>
 <script src='http://cdnjs.cloudflare.com/andiio/selectToAutocomplete/master/jquery.select-to-autocomplete.js'></script>
 <script src='http://cdnjs.cloudflare.com/andiio/selectToAutocomplete/master/jquery.select-to-autocomplete.min.js'></script>
 
-
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script  src="{% static 'js/profile.js' %}"></script>
 
     <script  src="{% static 'js/form.js' %}"></script>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->

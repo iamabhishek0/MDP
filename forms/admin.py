@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import FormSubmit , Booking , Room,UserProfile
+from .models import FormSubmit , Booking , Room,UserProfile , FeedbackSubmit
 from members.models import FormSubmit as FormSubmitmembers
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.admin import UserAdmin
@@ -32,6 +32,7 @@ class UserProfileEntry(admin.ModelAdmin):
 # admin.site.register(FormSubmit,AllEntryAdmin)
 admin.site.register(Room,RoomEntry)
 # admin.site.register(Booking,BookingEntry)
+admin.site.register(FeedbackSubmit)
 admin.site.register(UserProfile,UserProfileEntry)
 
 class ProfileInline(admin.StackedInline):
