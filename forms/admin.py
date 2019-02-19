@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import FormSubmit , Booking , Room,UserProfile , FeedbackSubmit
+# from .models import FormSubmit , Booking
+from .models import Room, UserProfile , FeedbackSubmit
 from members.models import FormSubmit as FormSubmitmembers
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.admin import UserAdmin
@@ -18,44 +19,41 @@ from django.core.mail import EmailMessage
 admin.site.site_header = "MDP ADMIN PAGE";
 admin.site.site_title = "ADMISTRATOR";
 
-class AllEntryAdmin(admin.ModelAdmin):
-	list_display = ("id", "name", "email","arrive","depart","reference_name","reference_email")
-class AllEntryAdmin1(admin.ModelAdmin):
-	list_display = ( "reference_name","reference_email")
+# class AllEntryAdmin(admin.ModelAdmin):
+# 	list_display = ("id", "name", "email","arrive","depart","reference_name","reference_email")
+# class AllEntryAdmin1(admin.ModelAdmin):
+# 	list_display = ( "reference_name","reference_email")
 class RoomEntry(admin.ModelAdmin):
 	list_display = ( "roomID", "room_type", "status")
-class BookingEntry(admin.ModelAdmin):
-	list_display = ( "bookingID", "user", "roomID", "name", "arrive", "depart")
+# class BookingEntry(admin.ModelAdmin):
+# 	list_display = ( "bookingID", "user", "roomID", "name", "arrive", "depart")
 class UserProfileEntry(admin.ModelAdmin):
-	list_display = ("user", "verified", "booking_mail_sent", "arrive", "depart", "street", "city", "reference_email")
+	list_display = ("user", "verified", "booking_mail_sent", "street", "city", "reference_email")
 class FeedBackEntry(admin.ModelAdmin):
     list_display = ("name","subject","message")
 
-# admin.site.register(FormSubmit,AllEntryAdmin)
-admin.site.register(Room,RoomEntry)
-# admin.site.register(Booking,BookingEntry)
-admin.site.register(FeedbackSubmit,FeedBackEntry)
-admin.site.register(UserProfile,UserProfileEntry)
+#
+# class ProfileInline(admin.StackedInline):
+# 	model = UserProfile
+# 	can_delete = False
+# 	verbose_name_plural = 'Profile'
+# 	fk_name = 'user'
+# 	ordering = ('-id',)
 
-class ProfileInline(admin.StackedInline):
-	model = UserProfile
-	can_delete = False
-	verbose_name_plural = 'Profile'
-	fk_name = 'user'
-	ordering = ('-id',)
+# class BookinInLine(admin.StackedInline):
+# 	model = Booking
+# 	can_delete = False
 
-class BookinInLine(admin.StackedInline):
-	model = Booking
-	can_delete = False
 class FormSubmitmembersInLine(admin.StackedInline):
 	model = FormSubmitmembers
 	can_delete = False
+
 class UserProfileAdmin(UserAdmin):
-	inlines = [ ProfileInline,FormSubmitmembersInLine]
+	# inlines = [ ProfileInline,FormSubmitmembersInLine]
 	ordering = ('-id', )
-	fieldsets = (
-			(None, {'fields': ('first_name','email', 'password')}),
-	)
+	# fieldsets = (
+	# 		(None, {'fields': ('first_name','email', 'password')}),
+	# )
 
 	def reference_verified(self, obj):
 		try:
@@ -82,12 +80,12 @@ class UserProfileAdmin(UserAdmin):
 			return obj.userprofile.is_member
 		except UserProfile.DoesNotExist:
 			return ''
-	def room(self, obj):
-		try:
-			return obj.booking_set.get().roomID
-		except Booking.DoesNotExist:
-			return ''
-	list_display =  ('first_name','id','email','reference_verified','admin_verified','verified','room','account_actions',)
+	# def room(self, obj):
+	# 	try:
+	# 		return obj.booking_set.get().roomID
+	# 	except Booking.DoesNotExist:
+	# 		return ''
+	list_display =  ('first_name','id','email','reference_verified','admin_verified','verified','account_actions',)
 	list_filter =('userprofile__is_member',)
 
 
@@ -151,5 +149,10 @@ class UserProfileAdmin(UserAdmin):
 
 
 admin.site.unregister(User)
-admin.site.register(User,UserProfileAdmin)
 admin.site.unregister(Group)
+admin.site.register(User,UserProfileAdmin)
+# admin.site.register(FormSubmit,AllEntryAdmin)
+admin.site.register(Room,RoomEntry)
+# admin.site.register(Booking,BookingEntry)
+admin.site.register(FeedbackSubmit,FeedBackEntry)
+admin.site.register(UserProfile,UserProfileEntry)

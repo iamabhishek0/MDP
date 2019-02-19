@@ -5,18 +5,18 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.conf import settings
 
-class FormSubmit(models.Model):
-	name=models.CharField(max_length=30)
-	email=models.CharField(max_length=30)
-	street=models.TextField(max_length=300)
-	city=models.CharField(max_length=30)
-	number=models.CharField(max_length=30)
-	pincode=models.CharField(max_length=30)
-	arrive=models.DateField()
-	depart=models.DateField()
-	reference_name=models.CharField(max_length=30)
-	reference_email=models.CharField(max_length=30)
-	room_type = models.CharField(max_length = 5)
+# class FormSubmit(models.Model):
+# 	name=models.CharField(max_length=30)
+# 	email=models.CharField(max_length=30)
+# 	street=models.TextField(max_length=300)
+# 	city=models.CharField(max_length=30)
+# 	number=models.CharField(max_length=30)
+# 	pincode=models.CharField(max_length=30)
+# 	arrive=models.DateField()
+# 	depart=models.DateField()
+# 	reference_name=models.CharField(max_length=30)
+# 	reference_email=models.CharField(max_length=30)
+# 	room_type = models.CharField(max_length = 5)
 	
 class FeedbackSubmit(models.Model):
 	"""docstring for FeedbackSubmit"""
@@ -24,13 +24,13 @@ class FeedbackSubmit(models.Model):
 	subject=models.CharField(max_length=30)
 	message=models.TextField(max_length=1000)
 
-class Booking(models.Model):
-	user = models.ForeignKey(User,on_delete=models.CASCADE)
-	bookingID = models.CharField(max_length=15)
-	roomID = models.CharField(max_length=15)
-	name = models.CharField(max_length=30)
-	arrive = models.DateField()
-	depart = models.DateField()
+# class Booking(models.Model):
+# 	user = models.ForeignKey(User,on_delete=models.CASCADE)
+# 	bookingID = models.CharField(max_length=15)
+# 	roomID = models.CharField(max_length=15)
+# 	name = models.CharField(max_length=30)
+# 	arrive = models.DateField()
+# 	depart = models.DateField()
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -42,8 +42,6 @@ class UserProfile(models.Model):
 	city=models.CharField(max_length=30)
 	number=models.CharField(max_length=30)
 	pincode=models.CharField(max_length=30)
-	arrive=models.DateField()
-	depart=models.DateField()
 	reference_name=models.CharField(max_length=30)
 	reference_email=models.CharField(max_length=30)
 	is_member=models.BooleanField(default=False)
@@ -58,7 +56,7 @@ class UserProfile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
 	if created:
 	   profile, created = UserProfile.objects.get_or_create(user=instance)
-	   profile, created = Booking.objects.get_or_create(user=instance)
+	   # profile, created = Booking.objects.get_or_create(user=instance)
 
 post_save.connect(create_user_profile, sender=User)
 

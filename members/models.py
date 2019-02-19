@@ -32,7 +32,7 @@ class FormSubmit(models.Model):
 
 
 class BookingTable(models.Model):
-	# user=models.ForeignKey(User, on_delete=models.CASCADE)
+	user=models.ForeignKey(User, on_delete=models.CASCADE)
 	bookingID = models.ForeignKey(FormSubmit, on_delete=models.CASCADE)
 	roomID = models.ForeignKey(Room,on_delete=models.CASCADE)
 	name = models.CharField(max_length=30)

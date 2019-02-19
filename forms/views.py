@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from .models import FormSubmit, Room , Booking ,UserProfile , FeedbackSubmit
+# from .models import FormSubmit , Booking
+from .models import Room, UserProfile , FeedbackSubmit
+from members.models import BookingTable
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
@@ -18,6 +20,7 @@ from django.template import RequestContext
 import json
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+
 def form_view(request):
 	return render(request,'room/book_a_room.html')
 def vipform(request):
@@ -33,7 +36,7 @@ def lat_ajax(request):
 		for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
 			f = 1
 			rID = r.roomID
-			for b in Booking.objects.raw('SELECT * FROM members_bookingtable WHERE roomID_id = %s', [rID]):
+			for b in BookingTable.objects.raw('SELECT * FROM members_bookingtable WHERE roomID_id = %s', [rID]):
 
 				if(b.arrive > depart or b.depart < arrive):
 					pass
@@ -131,8 +134,6 @@ def form_submit(request):
 	profile.street=street
 	profile.city=city
 	profile.pincode=pincode
-	profile.arrive=arrive
-	profile.depart=depart
 	profile.number=number
 	profile.reference_name=reference_name
 	profile.reference_email=reference_email
@@ -191,7 +192,6 @@ def director_activate(request, uidb64,token):
 				'depart' : profile.depart,
 				'roomID' : booking.roomID_id,
 				'domain': '127.0.0.1:8000/director/cancel'
-
 				,})
 				to_email=user.email
 				profile.booking_mail_sent= True

@@ -8,7 +8,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from forms.tokens import account_activation_token
 from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login ,logout
-from forms.models import  Room , Booking ,UserProfile
+from forms.models import  Room, UserProfile
 from django.contrib.auth.decorators import login_required
 from dateutil import parser
 from django.urls import reverse

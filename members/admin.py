@@ -19,7 +19,6 @@ class FormSubmitAdmin(admin.ModelAdmin):
 	# fieldsets = (
 	# 		(None, {'fields': ('name','email','no_of_rooms','adults','childs','userbookings','reference_verified','director_verified','verified')}),
 	# )
-
 	# def reference_verified(self, obj):
 	# 	try:
 	# 		return obj.formsubmit.reference_verified
@@ -108,7 +107,6 @@ class FormSubmitAdmin(admin.ModelAdmin):
 		msg.attach("pdf_file.pdf", pdf_file, 'application/pdf')
 		msg.content_subtype = "html"
 		msg.send()
-
 		return response
 #
 # class FormSubmitInline(admin.StackedInline):
