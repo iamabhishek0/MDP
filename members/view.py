@@ -73,7 +73,7 @@ def submit(request):
 
 				f=0
 		if f == 1:
-			booking = BookingTable.objects.create(roomID_id=r, bookingID=formsubmit, arrive=arrive, name=name, depart=depart)
+			booking = BookingTable.objects.create(user=user,roomID_id=r, bookingID=formsubmit, arrive=arrive, name=name, depart=depart)
 			booking.save()
 			#User.objects.get(id = user.id).booking_set.add(booking)
 			found = 1

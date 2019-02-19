@@ -27,8 +27,12 @@ class FormSubmit(models.Model):
 	verified=models.BooleanField(default=False)
 	booking_mail_sent=models.BooleanField(default=False)
 	admin_verified=models.BooleanField(default=False)
+
 	def room(self):
 		return self.bookingtable.roomID
+
+	def __str__(self):
+		return str(self.id)
 
 
 class BookingTable(models.Model):
@@ -40,4 +44,4 @@ class BookingTable(models.Model):
 	depart = models.DateField()
 
 	def __str__(self):
-		return self.bookingID
+		return str(self.bookingID.id)

@@ -371,7 +371,7 @@ $(document).ready(function(){
                   <div class="col-sm-4">
                 <div class="form-group">
                   <span class="form-label">Phone</span>
-                  <input id="phone"  class="form-control" type="tel" placeholder="Enter Your Phone Number" name="phone" value="{{ user.number}}" required>
+                  <input id="phone"  class="form-control" type="tel" placeholder="Enter Your Phone Number" name="phone" value="{{ user.userprofile.number}}" required>
                 </div>
               </div>
             
@@ -379,7 +379,7 @@ $(document).ready(function(){
                   <div class="col-sm-4">
               <div class="form-group">
                   <span class="form-label">Address</span>
-                  <input id="street" class="form-control" type="text" placeholder="Enter Your Address" name="street" value="{{user.street}}" required>
+                  <input id="street" class="form-control" type="text" placeholder="Enter Your Address" name="street" value="{{ user.userprofile.street}}" required>
                 </div>
               </div>
             </div>
@@ -387,7 +387,7 @@ $(document).ready(function(){
                   <div class="col-sm-4">
                  <div class="form-group">
                   <span class="form-label">Age</span>
-                  <input id="street-number" class="form-control" type="number" placeholder="Enter Your Age" name="age" value="{{ user.streetnumber}}" required>
+                  <input id="street-number" class="form-control" type="number" placeholder="Enter Your Age" name="age" value="" required>
                 </div>
               </div>
             
@@ -395,13 +395,13 @@ $(document).ready(function(){
                   <div class="col-sm-4">
                 <div class="form-group">
                   <span class="form-label">City</span>
-                  <input class="form-control" type="text" id="city" placeholder="Enter Your City" name="city" value="{{user.city}}" required>
+                  <input class="form-control" type="text" id="city" placeholder="Enter Your City" name="city" value="{{ user.userprofile.city}}" required>
                 </div>
               </div>
             </div>
                 <div class="form-group">
                   <span class="form-label">Postal Code</span>
-                  <input class="form-control" type="number" id="post-code" placeholder="Enter Your Pin Code" name="post-code" value="{{user.pincode}}"required>
+                  <input class="form-control" type="number" id="post-code" placeholder="Enter Your Pin Code" name="post-code" value="{{ user.userprofile.pincode}}"required>
                 </div>
                  <button type="button" value="button" onclick="formreset()"  class="submit-btn">Not as {{user.username}}</button>
               </div1>
@@ -474,11 +474,11 @@ $(document).ready(function(){
                 <h1> Reference Details</h1>
               <div class="form-group">
                   <span class="form-label">Reference Name</span>
-                  <input id="reference_name" class="form-control" type="text" placeholder="Enter Your Name" name="reference_name" required>
+                  <input id="reference_name" class="form-control" type="text" placeholder="Enter Name" name="reference_name" value="{{ user.userprofile.reference_name }}" required>
                 </div>
                 <div class="form-group">
                   <span class="form-label">Reference Email</span>
-                  <input class="form-control" id="reference_email" type="Email" placeholder="Enter Your Email" name="reference_email" required>
+                  <input class="form-control" id="reference_email" type="Email" placeholder="Enter Email" name="reference_email" value="{{ user.userprofile.reference_name }}" required>
                 </div>
                 <div class="form-group">
                       <span class="form-label">Designation</span>
