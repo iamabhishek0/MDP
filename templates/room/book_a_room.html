@@ -59,6 +59,25 @@
     });
       </script>
 
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- <script>
+$(document).ready(function(){
+  $("#same").click(function(){
+    $("div1").hide();
+    $("div2").show();
+  });
+  $("#different").click(function(){
+    $("div1").show();
+    $("div2").hide();
+  });
+  $("#check_avail").click(function(){
+    $("div2").hide();
+    $("div1").show();
+  });
+});
+</script> -->
+
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -328,36 +347,128 @@
   </div>
                 </div>
                  <div class="tab">
+                  
+                    
                 <h1>Guest Details</h1>
-                <div class="form-group">
+                <div1>
+                  <div class="row">
+                  <div class="col-sm-4">
+                    <div class="form-group">
                   <span class="form-label">Name</span>
-                  <input id="name" class="form-control" type="text" placeholder="Enter Your Name" name="name" required>
+                  <input id="name" class="form-control" type="text" placeholder="Enter Your Name" name="name" value="{{ user.first_name }}" required>
                 </div>
+              </div>
+            
+
+                  <div class="col-sm-4">
                 <div class="form-group">
                   <span class="form-label">Email</span>
-                  <input class="form-control" type="Email" placeholder="Enter Your Email" name="email"  id="email" required>
+                  <input class="form-control" type="Email" placeholder="Enter Your Email" name="email"  id="email" value="{{ user.email }}" required>
                 </div>
+              </div>
+            </div>
+                <div class="row">
+                  <div class="col-sm-4">
                 <div class="form-group">
                   <span class="form-label">Phone</span>
-                  <input id="phone"  class="form-control" type="tel" placeholder="Enter Your Phone Number" name="phone" required>
+                  <input id="phone"  class="form-control" type="tel" placeholder="Enter Your Phone Number" name="phone" value="{{ user.number}}" required>
                 </div>
+              </div>
+            
+
+                  <div class="col-sm-4">
               <div class="form-group">
                   <span class="form-label">Address</span>
-                  <input id="street" class="form-control" type="text" placeholder="Enter Your Address" name="street" required>
+                  <input id="street" class="form-control" type="text" placeholder="Enter Your Address" name="street" value="{{user.street}}" required>
                 </div>
+              </div>
+            </div>
+                <div class="row">
+                  <div class="col-sm-4">
                  <div class="form-group">
                   <span class="form-label">Age</span>
-                  <input id="street-number" class="form-control" type="number" placeholder="Enter Your Age" name="age" required>
+                  <input id="street-number" class="form-control" type="number" placeholder="Enter Your Age" name="age" value="{{ user.streetnumber}}" required>
                 </div>
+              </div>
+            
+
+                  <div class="col-sm-4">
                 <div class="form-group">
                   <span class="form-label">City</span>
-                  <input class="form-control" type="text" id="city" placeholder="Enter Your City" name="city" required>
+                  <input class="form-control" type="text" id="city" placeholder="Enter Your City" name="city" value="{{user.city}}" required>
                 </div>
+              </div>
+            </div>
                 <div class="form-group">
                   <span class="form-label">Postal Code</span>
-                  <input class="form-control" type="number" id="post-code" placeholder="Enter Your Pin Code" name="post-code" required>
+                  <input class="form-control" type="number" id="post-code" placeholder="Enter Your Pin Code" name="post-code" value="{{user.pincode}}"required>
                 </div>
+                 <button type="button" value="button" onclick="formreset()"  class="submit-btn">Not as {{user.username}}</button>
+              </div1>
+
+
+<!-- 
+                <div2>
+                  <div class="row">
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                  <span class="form-label">Nam</span>
+                  <input id="name" class="form-control" type="text" placeholder="Enter Your Name" name="name" value={{user.username}} >
                 </div>
+              </div>
+            
+
+                  <div class="col-sm-4">
+                <div class="form-group">
+                  <span class="form-label">Email</span>
+                  <input class="form-control" type="Email" placeholder="Enter Your Email" name="email"  id="email" value={{user.email}}>
+                </div>
+              </div>
+            </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                <div class="form-group">
+                  <span class="form-label">Phone</span>
+                  <input id="phone"  class="form-control" type="tel" placeholder="Enter Your Phone Number" name="phone" value={{user.phone}}>
+                </div>
+              </div>
+            
+
+                  <div class="col-sm-4">
+              <div class="form-group">
+                  <span class="form-label">Address</span>
+                  <input id="street" class="form-control" type="text" placeholder="Enter Your Address" name="street" value={{user.street}}>
+                </div>
+              </div>
+            </div>
+                <div class="row">
+                  <div class="col-sm-4">
+                 <div class="form-group">
+                  <span class="form-label">Age</span>
+                  <input id="street-number" class="form-control" type="number" placeholder="Enter Your Age" name="age" value={{user.age}}>
+                </div>
+              </div>
+            
+
+                  <div class="col-sm-4">
+                <div class="form-group">
+                  <span class="form-label">City</span>
+                  <input class="form-control" type="text" id="city" placeholder="Enter Your City" name="city" value={{user.city}}>
+                </div>
+              </div>
+            </div>
+                <div class="form-group">
+                  <span class="form-label">Postal Code</span>
+                  <input class="form-control" type="number" id="post-code" placeholder="Enter Your Pin Code" name="post-code" value={{user.pincode}}>
+                </div>
+                 <button type="button" value="button" id="different"  class="submit-btn">Not as {{user.username}}</button>
+              </div2> -->
+
+
+
+
+                </div>
+              
              
                 <div class="tab">
                 <h1> Reference Details</h1>
@@ -461,7 +572,7 @@ function validateForm() {
       // add an "invalid" class to the field:
       y[i].className += " invalid";
       // and set the current valid status to false
-      valid = false;
+      valid = true;
     }
   }
   // If the valid status is true, mark the step as finished and valid:
@@ -481,7 +592,17 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
 </script>
-
+<script>
+function formreset() {
+  document.getElementById("name").defaultValue = "";
+  document.getElementById("email").defaultValue = "";
+  document.getElementById("phone").defaultValue = "";
+  document.getElementById("street").defaultValue = "";
+  document.getElementById("street-number").defaultValue = "";
+  document.getElementById("city").defaultValue = "";
+  document.getElementById("post-code").defaultValue = "";
+}
+</script>
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://cdnjs.cloudflare.com/andiio/selectToAutocomplete/master/jquery-ui-autocomplete.js'></script>
 <script src='http://cdnjs.cloudflare.com/andiio/selectToAutocomplete/master/jquery.select-to-autocomplete.js'></script>
