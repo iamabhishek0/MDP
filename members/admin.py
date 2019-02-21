@@ -45,12 +45,13 @@ class FormSubmitAdmin(admin.ModelAdmin):
 	# 	except FormSubmit.DoesNotExist:
 	# 		return ''
 
-	def room(self, obj):
-		try:
-			return BookingTable.objects.get(bookingID=obj).roomID
-		except BookingTable.DoesNotExist:
-			return ''
-	list_display =  ('id','name','userbookings','email','no_of_rooms','adults','childs','arrive','depart','reference_verified','director_verified','verified','room','account_actions',)
+	# def room(self, obj):
+	# 	try:
+	# 		return BookingTable.objects.get(bookingID=obj).roomID
+	# 	except BookingTable.DoesNotExist:
+	# 		return ''
+
+	list_display =  ('id','name','user','email','no_of_rooms','adults','childs','arrive','depart','reference_verified','director_verified','verified','account_actions',)
 
 
 

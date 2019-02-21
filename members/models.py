@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class FormSubmit(models.Model):
-	userbookings=models.ForeignKey(User, on_delete=models.CASCADE)
+	user=models.ForeignKey(User, on_delete=models.CASCADE)
 	name = models.CharField(max_length=30)
 	email = models.CharField(max_length=30)
 	age = models.IntegerField()

@@ -12,7 +12,7 @@
   <style>
   .table-wrapper-scroll-y {
 display: block;
-max-height: 200px;
+max-height: 720px;
 overflow-y: auto;
 -ms-overflow-style: -ms-autohiding-scrollbar;
 }
@@ -124,13 +124,13 @@ tbody {
       </tr>
     </thead>
     <tbody>
-        {% for item in formsubmits %}
+        {% for item in bookings %}
     <tr>
       <td>{{ forloop.counter }}</td>
       <td>{{ item.name }}</td>
       <td>{{ item.arrive }}</td>
       <td>{{ item.depart }}</td>
-      <td>{{ "do something" }}</td>
+      <td>{{ item.roomID }}</td>
       {% if item.verified == True %}
       <!--<td>{{ item.verified }}</td>-->
       <td>Confirm</td>

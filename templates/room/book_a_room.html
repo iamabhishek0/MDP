@@ -28,12 +28,13 @@
 
       <script>
       $(document).ready(function() {
-              var name,arrive,depart,roomtype;
+              var name,arrive,depart,room_type,no_of_rooms;
               $("#check_avail").click(function(){
                      name = $("#name").val();
                      arrive= $("#arrive").val()
                      depart = $("#depart").val()
                      room_type=$("#room_type").val();
+                     no_of_rooms=$("#no_of_rooms").val();
                       $.ajax({
                                 url: "/bookroom/ajax/",
                                 type: "POST",
@@ -42,15 +43,20 @@
                                         'arrive': arrive.toString(),
                                         'depart':depart.toString(),
                                         'room_type':room_type,
+                                        'no_of_rooms':no_of_rooms,
                                         'csrfmiddlewaretoken': '{{csrf_token}}'
                                       },
                                 cache:false,
                                 dataType: "json",
                                 success: function(resp){
-                                  if(!resp.booked)
-                                    alert("Room not available on given date");
+                                  if(resp.found==0)
+                                    alert("Sorry! no rooms available for requested dates");
+                                  else if(resp.found<resp.norooms){
+                                      msg = 'Only ' + resp.found + ' rooms available for requested dates!';
+                                      alert(msg);
+                                    }
                                   else {
-                                    alert("Room available");
+                                    alert("Rooms available");
                                     nextPrev(1);
                                   }
                                 }
@@ -478,7 +484,7 @@ $(document).ready(function(){
                 </div>
                 <div class="form-group">
                   <span class="form-label">Reference Email</span>
-                  <input class="form-control" id="reference_email" type="Email" placeholder="Enter Email" name="reference_email" value="{{ user.userprofile.reference_name }}" required>
+                  <input class="form-control" id="reference_email" type="Email" placeholder="Enter Email" name="reference_email" value="{{ user.userprofile.reference_email }}" required>
                 </div>
                 <div class="form-group">
                       <span class="form-label">Designation</span>

@@ -29,9 +29,8 @@ def profile(request):
 @login_required
 def bookings(request):
 	user=request.user
-	formsubmits=(FormSubmit.objects.filter(userbookings=user))
-	# userbookings=
-	return render(request, 'bookings.html',{'user':user,'formsubmits':formsubmits})
+	bookings=(BookingTable.objects.filter(user=user))
+	return render(request, 'bookings.html',{'user':user,'bookings':bookings})
 
 @login_required
 def roombook(request):
@@ -56,32 +55,38 @@ def submit(request):
 	no_of_rooms = request.POST["no_of_rooms"]
 	adults = request.POST["adults"]
 	childs = request.POST["childs"]
-	formsubmit = FormSubmit(userbookings=user,name=name, email=email, age=age, number=number, street=street, city=city,
+	formsubmit = FormSubmit(user=user,name=name, email=email, age=age, number=number, street=street, city=city,
 							pincode=pincode, arrive=arrive, depart=depart, reference_email=reference_email,
 							reference_name=reference_name, reference_designation=reference_designation,
 							room_type=room_type, no_of_rooms=no_of_rooms, adults=adults, childs=childs)
 	formsubmit.save()
+
 	found = 0
-	for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
-		f = 1
-		rID = r.roomID
-		for b in BookingTable.objects.raw('SELECT * FROM members_bookingtable WHERE roomID_id = %s', [rID]):
+	norooms = int(no_of_rooms)
+	for i in range(norooms):
 
-			if(b.arrive > depart or b.depart < arrive):
-				pass
-			else:
+		for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
+			f = 1
+			rID = r.roomID
+			for b in BookingTable.objects.raw('SELECT * FROM members_bookingtable WHERE roomID_id = %s', [rID]):
 
-				f=0
-		if f == 1:
-			booking = BookingTable.objects.create(user=user,roomID_id=r, bookingID=formsubmit, arrive=arrive, name=name, depart=depart)
-			booking.save()
-			#User.objects.get(id = user.id).booking_set.add(booking)
-			found = 1
-			break
-		if found == 1:
-			break
+				if(b.arrive > depart or b.depart < arrive):
+					pass
+				else:
+
+					f=0
+			if f == 1:
+				booking = BookingTable.objects.create(user=user, roomID_id=r, bookingID=formsubmit, arrive=arrive, name=name, depart=depart)
+				booking.save()
+				#User.objects.get(id = user.id).booking_set.add(booking)
+				found += 1
+				break
+			if found == norooms:
+					break
 	if found == 0:
-		return HttpResponse('Sorry no rooms available for requested dates')
+		return HttpResponse('Sorry! no rooms available for requested dates')
+	elif found < norooms:
+		return HttpResponse('Only ' + str(found) + ' rooms available for requested dates!')
 	send_verification_email.delay(formsubmit.id)
 		#room not available
 
