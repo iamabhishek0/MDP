@@ -114,6 +114,10 @@ def logoutuser(request):
 	logout(request)
 	return redirect('/membership')
 
+@login_required
+def bookingdetails(request):
+		return render(request, 'booking_details.html')
+
 def register(request):
 	name=request.POST["name"]
 	email=request.POST["email"]

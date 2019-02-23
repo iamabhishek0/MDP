@@ -6,8 +6,6 @@
   <title>My Bookings</title>
   {% load static %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-
-
       <link rel="stylesheet" href="{% static 'css/profile.css' %}">
   <style>
   .table-wrapper-scroll-y {
@@ -121,6 +119,7 @@ tbody {
         <th>Room No.</th>
         <th>Status</th>
         <th>Bill</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -138,6 +137,7 @@ tbody {
       <td>Pending</td>
       {% endif %}
       <td><a href="/admin/members/formsubmit/{{item.id}}/deposit/">Generate</a></td>
+      <td><a href="details/">Details</a></td>
     </tr>
     {% endfor %}
       
