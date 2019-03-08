@@ -35,6 +35,18 @@ def bookings(request):
 @login_required
 def roombook(request):
 	return render(request,'room/book_a_room.html')
+@login_required
+def changepassword(request):
+	return render(request,'room/changepassword.html')
+@login_required
+def changepasswordsubmit(request):
+	user=request.user
+	newpassword=request.POST["newpassword"]
+	renewpassword=request.POST["renewpassword"]
+	user.set_password(newpassword)
+	user.save()
+	return render(request,'room/index.html')
+
 
 @login_required
 def submit(request):

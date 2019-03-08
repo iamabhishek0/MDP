@@ -19,7 +19,10 @@ urlpatterns = [
            view.director_activate, name='activatedirector'),
 
      url(r'^activatemembers/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-           view.member_activate, name='activatemembers'),       
+           view.member_activate, name='activatemembers'), 
+     path('changepassword/', view.changepassword, name='changepassword'),      
+     path('changepassword/changepasswordsubmit/', view.changepasswordsubmit, name='changepasswordsubmit'),
+
     # path('register/',views.register,name='register'),
 
 ]
