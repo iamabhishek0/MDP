@@ -6,6 +6,7 @@ from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from forms.tokens import account_activation_token
+from members.token import forgot_password_token
 from django.template.loader import render_to_string
 from django.contrib.auth import authenticate, login ,logout
 from forms.models import  Room, UserProfile
@@ -46,7 +47,40 @@ def changepasswordsubmit(request):
 	user.set_password(newpassword)
 	user.save()
 	return render(request,'room/index.html')
+def forgotpassworduser(request):
+	return render(request,'forgotpassword.html')
+def forgotpassword(request):
 
+	username = request.POST.get('username')
+	user = User.objects.get(username=username)
+
+	
+		
+	# if user is not  None and profile.is_member is True :
+	if user is not None:
+			mail_subject = 'IIITM guest house'
+			message=render_to_string('forgotpassword_mail.html',{'user': user,
+					'domain': '127.0.0.1:8000',
+					'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+					'token': forgot_password_token.make_token(user),})
+			email=EmailMessage(mail_subject,message,to=[user.email])
+			email.send()
+			return HttpResponse('Check Your Email')
+		
+	else:
+		return HttpResponse('Sorry you are not a member')
+def forgotpasswordsubmit(request, uidb64, token):
+	try:
+		uid = force_text(urlsafe_base64_decode(uidb64))
+		user = User.objects.get(pk=uid)
+	except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+		user = None
+	if user is not None and forgot_password_token.check_token(user, token):
+		login(request,user)
+
+		return redirect('/membership/changepassword/')
+	else:
+		return HttpResponse('link is invalid! or You have already confirmed!!')
 
 @login_required
 def submit(request):

@@ -41,6 +41,7 @@
 
             <!-- Login Form -->
             <div class="signup form-peice">
+
                <form class="login-form" action="login/" method="post">
                  {% csrf_token %}
                   <div class="form-group">
@@ -57,7 +58,19 @@
                      <input type="submit" value="Login">
                      <a href="#" class="switch">Apply For Membership</a>
                   </div>
+                  <div class="CTA">
+                     <a href="forgotpassworduser/">Forgot Password ? </a>
+                  </div>
+                
                </form>
+               <!-- <form action="forgotpassword/" method="POST">
+                   {% csrf_token %}
+                  <div class="form-group">
+                     <label for="username">Username</label>
+                     <input type="name" name="username" id="username" required>
+                  </div> -->
+                
+                <!-- </form> -->
             </div><!-- End Login Form -->
 
 

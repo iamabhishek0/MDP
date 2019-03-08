@@ -22,6 +22,10 @@ urlpatterns = [
            view.member_activate, name='activatemembers'), 
      path('changepassword/', view.changepassword, name='changepassword'),      
      path('changepassword/changepasswordsubmit/', view.changepasswordsubmit, name='changepasswordsubmit'),
+     path('forgotpassworduser/forgotpassword/', view.forgotpassword, name='forgotpassword'),
+     path('forgotpassworduser/', view.forgotpassworduser, name='forgotpassworduser'),
+     url(r'^forgotpasswordsubmit/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+           view.forgotpasswordsubmit, name='forgotpasswordsubmit'), 
 
     # path('register/',views.register,name='register'),
 
