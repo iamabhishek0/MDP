@@ -82,7 +82,7 @@ tbody {
   <div class="nav-container">
    <!--  <div class="back">
       <a href="#">Hi {{user.username}}!</a>
-    </div> --> 
+    </div> -->
     <div class="back">
       <a href="/"><img src="{% static 'img/back.png' %}"  height="42" width="42" alt="" /></a>
     </div>
@@ -92,7 +92,7 @@ tbody {
     <nav>
       <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
       <ul class="nav-list">
-        
+
         <li>
           <a href="/">Home</a>
         </li>
@@ -119,7 +119,7 @@ tbody {
         <th>Room No.</th>
         <th>Status</th>
         <th>Bill</th>
-        <th></th>
+        <!--<th></th>-->
       </tr>
     </thead>
     <tbody>
@@ -137,10 +137,10 @@ tbody {
       <td>Pending</td>
       {% endif %}
       <td><a href="/admin/members/formsubmit/{{item.id}}/deposit/">Generate</a></td>
-      <td><a href="details/">Details</a></td>
+      <!--<td><a href="details/">Details</a></td>-->
     </tr>
     {% endfor %}
-      
+
     </tbody>
   </table>
 </div>
@@ -148,5 +148,4 @@ tbody {
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script  src="{% static 'js/profile.js' %}"></script>
 </body>
-
 </html>

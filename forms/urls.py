@@ -15,6 +15,4 @@ urlpatterns = [
            view.member_activate, name='member_activate'),
      url(r'^cancel/director/activate/(?P<uidb64>[0-9A-Za-z_\-]+)/$',
         views.cancel_booking ,name='cancel_booking'),
-
-
      ]

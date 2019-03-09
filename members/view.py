@@ -260,7 +260,7 @@ def director_activate(request, uidb64):
 				'uid': urlsafe_base64_encode(force_bytes(formsubmit.pk)).decode(),
 				# 'token': account_activation_token.make_token(user),
 				'depart' : formsubmit.depart,
-				'roomID' : booking.roomID_id,
+				# 'roomID' : booking.roomID_id,
 				'domain': '127.0.0.1:8000/director/cancel'
 				,})
 				to_email=formsubmit.email
