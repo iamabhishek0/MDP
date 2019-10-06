@@ -132,23 +132,21 @@ def form_submit(request):
     reference_name = request.POST["reference_name"]
     reference_email = request.POST["reference_email"]
     formsubmit = FormSubmit(name=name, email=email, number=number, street=street, city=city, pincode=pincode,
-                            arrive=arrive, depart=depart, reference_email=reference_email,
-                            reference_name=reference_name)
+            arrive=arrive, depart=depart, reference_email=reference_email,
+            reference_name=reference_name)
     formsubmit.save()
 
     user = User.objects.create_user(username=name + str(randint(0, 999)), email=email, password='arpitarpit',
-                                    first_name=name)
+            first_name=name)
     # user = User.objects.create_user(username=name,email=email,password='arpitarpit',first_name=name)
     found = 0
     for r in Room.objects.raw('SELECT * FROM forms_room WHERE status = "a" and room_type = %s', [room_type]):
         f = 1
         rID = r.roomID
         for b in Booking.objects.raw('SELECT * FROM members_bookingtable WHERE roomID_id = %s', [rID]):
-
             if (b.arrive > depart or b.depart < arrive):
                 pass
             else:
-
                 f = 0
         if f == 1:
             booking = Booking.objects.get(user=user)
@@ -194,12 +192,12 @@ def activate(request, uidb64, token):
             if not profile.booking_mail_sent:
                 mail_subject = 'IIITM guest house'
                 message = render_to_string('booking_mail.html', {'user': user,
-                                                                 'domain': '127.0.0.1:8000/director/cancel',
-                                                                 'uid': urlsafe_base64_encode(
-                                                                     force_bytes(user.pk)).decode(),
-                                                                 'token': account_activation_token.make_token(user),
-                                                                 'arrive': profile.arrive,
-                                                                 'depart': profile.depart
+                    'domain': '127.0.0.1:8000/director/cancel',
+                    'uid': urlsafe_base64_encode(
+                        force_bytes(user.pk)).decode(),
+                    'token': account_activation_token.make_token(user),
+                    'arrive': profile.arrive,
+                    'depart': profile.depart
                     , })
                 to_email = user.email
                 profile.booking_mail_sent = True
@@ -227,13 +225,13 @@ def director_activate(request, uidb64, token):
             if not profile.booking_mail_sent:
                 mail_subject = 'IIITM guest house'
                 message = render_to_string('booking_mail.html', {'user': user,
-                                                                 'arrive': profile.arrive,
-                                                                 'uid': urlsafe_base64_encode(
-                                                                     force_bytes(user.pk)).decode(),
-                                                                 'token': account_activation_token.make_token(user),
-                                                                 'depart': profile.depart,
-                                                                 'roomID': booking.roomID_id,
-                                                                 'domain': '127.0.0.1:8000/director/cancel'
+                    'arrive': profile.arrive,
+                    'uid': urlsafe_base64_encode(
+                        force_bytes(user.pk)).decode(),
+                    'token': account_activation_token.make_token(user),
+                    'depart': profile.depart,
+                    'roomID': booking.roomID_id,
+                    'domain': '127.0.0.1:8000/director/cancel'
                     , })
                 to_email = user.email
                 profile.booking_mail_sent = True
